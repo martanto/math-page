@@ -4,11 +4,11 @@ A single-page mathematical notation reference — with KaTeX-rendered symbols, L
 
 ## Features
 
-- **110+ symbols** across Logic, Set Theory, Linear Algebra, Calculus, Probability, Statistics, Algebra, and General notation
+- **114 symbols** across Logic, Set Theory, Linear Algebra, Calculus, Probability, Statistics, Algebra, and General notation
 - **Search** by name, symbol, or LaTeX string
 - **Category filters** with live result counts
 - **Expandable cards** showing LaTeX source, meaning, explanation, and examples
-- **Greek letters**, **abbreviations**, **notation variants**, and **named equations** tabs
+- **Greek letters**, **notation variants**, **abbreviations**, and **famous equations** tabs
 - **Copy to clipboard** for any LaTeX snippet
 - **Font size control** and **print view** (symbols tab only, hides UI chrome)
 - Fully responsive — 4 → 3 → 2 → 1 column grid
