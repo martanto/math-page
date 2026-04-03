@@ -359,9 +359,6 @@
 </div>
 <script>
 
-  /* ══════════════════════════════════════════
-     SOURCES
-  ══════════════════════════════════════════ */
   const SOURCES={
     grami:{short:'Grami 2022',title:'Discrete Mathematics'},
     murphy:{short:'Murphy 2023',title:'Probabilistic Machine Learning'},
@@ -372,16 +369,7 @@
     wiki:{short:'Wikipedia',title:'Glossary of Mathematical Symbols'},
   };
 
-  /* ══════════════════════════════════════════
-     LATEX PACKAGES
-     pkg: null = built-in, 'amsmath','amssymb','mathbb' etc
-  ══════════════════════════════════════════ */
-
-  /* ══════════════════════════════════════════
-     SYMBOLS DATA
-  ══════════════════════════════════════════ */
   const SYMBOLS=[
-    // ── LOGIC ──
     {symbol:"p \\equiv q",name:"Logical Equivalence",category:"logic",pkg:null,usedIn:["Logic","CS"],sources:["grami"],
       meaning:"p and q are logically equivalent — same truth value in all cases.",
       explanation:"Two statements are logically equivalent when their truth tables are identical.",
@@ -434,7 +422,6 @@
       meaning:"Logical equivalence — each side implies the other.",
       explanation:"Two-headed arrow used in formal proofs.",
       examples:["A=B\\Leftrightarrow A\\subseteq B\\land B\\subseteq A"]},
-    // ── NEW from Wikipedia: arithmetic/comparison ──
     {symbol:"\\pm",name:"Plus-Minus",category:"misc",pkg:null,usedIn:["Analysis","Stats","Physics"],sources:["wiki"],
       meaning:"Denotes alternatives: both plus and minus. Also denotes measurement uncertainty.",
       explanation:"10 ± 2 means the value lies between 8 and 12. In quadratic formula gives both roots.",
@@ -467,7 +454,6 @@
       meaning:"Context-dependent: asymptotic equivalence (f ∼ g), or distributed as (X ∼ p).",
       explanation:"In analysis: f(x)/g(x) → 1. In probability: X has distribution p. One of the most context-sensitive symbols.",
       examples:["n! \\sim \\sqrt{2\\pi n}(n/e)^n\\text{ (Stirling)}","X\\sim\\mathcal{N}(0,1)"]},
-    // ── SETS ──
     {symbol:"x \\in A",name:"Set Membership",category:"set",pkg:null,usedIn:["Sets","Analysis"],sources:["grami","aronow","wiki"],
       meaning:"x is an element of set A.",
       explanation:"The fundamental relation of set theory.",
@@ -548,7 +534,6 @@
       meaning:"All x∈ℝ with a strictly less than x strictly less than b. Both endpoints excluded.",
       explanation:"The open interval excludes its boundary points.",
       examples:["(0,1)=\\{x\\in\\mathbb{R}:0<x<1\\}"]},
-    // ── ALGEBRA / FUNCTIONS ──
     {symbol:"f: X \\to Y",name:"Function",category:"algebra",pkg:null,usedIn:["Functions","Analysis"],sources:["grami","aronow","wiki"],
       meaning:"A rule mapping each element of domain X to exactly one element of codomain Y.",
       explanation:"The range is the actual set of outputs.",
@@ -621,7 +606,6 @@
       meaning:"The cross product of two 3D vectors — produces a vector perpendicular to both.",
       explanation:"Only defined in 3D (and 7D). |u×v|=|u||v|sin(θ).",
       examples:["\\hat{i}\\times\\hat{j}=\\hat{k}","\\mathbf{u}\\times\\mathbf{v}=-\\mathbf{v}\\times\\mathbf{u}"]},
-    // ── GENERAL ──
     {symbol:"\\approx",name:"Approximately Equal",category:"misc",pkg:null,usedIn:["Analysis","Numerics"],sources:["murphy","holz","wiki"],
       meaning:"Two quantities are approximately or nearly equal.",
       explanation:"Used in numerical approximations and asymptotic analysis.",
@@ -686,7 +670,6 @@
       meaning:"The instantaneous rate of change of f with respect to x.",
       explanation:"f'(x)=lim_{h→0}(f(x+h)−f(x))/h. Also written df/dx or Df.",
       examples:["f(x)=x^2\\Rightarrow f'(x)=2x","(\\sin x)'=\\cos x"]},
-    // ── LINEAR ALGEBRA ──
     {symbol:"A^{\\top}",name:"Matrix Transpose",category:"linalg",pkg:null,usedIn:["Linear Algebra","ML","Stats"],sources:["grami","murphy","aronow","abadir","wiki"],
       meaning:"Rows and columns of A are swapped. Element (i,j) of A^T equals (j,i) of A.",
       explanation:"If A is m×n then A^T is n×m.",
@@ -739,7 +722,6 @@
       meaning:"Vectors x and y are orthogonal — their inner product is zero.",
       explanation:"Generalization of perpendicularity. Orthogonal vectors carry independent information.",
       examples:["\\mathbf{x}^\\top\\mathbf{y}=0\\Leftrightarrow\\mathbf{x}\\perp\\mathbf{y}"]},
-    // ── CALCULUS ──
     {symbol:"\\nabla f",name:"Gradient",category:"calculus",pkg:null,usedIn:["Calculus","ML","Optimization"],sources:["murphy","holz","abadir"],
       meaning:"Vector of all partial derivatives of scalar f.",
       explanation:"Points in the direction of steepest ascent. Used in gradient descent.",
@@ -756,7 +738,6 @@
       meaning:"Net signed area under f between x=a and x=b.",
       explanation:"Indefinite form ∫f(x)dx gives all antiderivatives (+C).",
       examples:["\\int_0^1 x\\,dx=\\tfrac{1}{2}","\\int x^n\\,dx=\\tfrac{x^{n+1}}{n+1}+C"]},
-    // ── PROBABILITY ──
     {symbol:"P(A)",name:"Probability",category:"probability",pkg:null,usedIn:["Probability","Statistics"],sources:["grami","stats","aronow","wiki"],
       meaning:"The probability that event A occurs. A value in [0,1].",
       explanation:"P(A)=0: impossible. P(A)=1: certain.",
@@ -809,7 +790,6 @@
       meaning:"Logistic function mapping all real numbers to (0,1).",
       explanation:"σ(x)=1/(1+e^(−x)). Used in logistic regression and neural networks.",
       examples:["\\sigma(0)=0.5,\\;\\sigma(\\pm\\infty)\\to\\{1,0\\}"]},
-    // ── STATISTICS ──
     {symbol:"\\bar{x}",name:"Sample Mean",category:"statistics",pkg:null,usedIn:["Stats","Econometrics"],sources:["stats","aronow","abadir"],
       meaning:"Arithmetic average of a sample of observations.",
       explanation:"Estimates the population mean μ.",
@@ -848,9 +828,6 @@
       examples:["R^2=1-\\frac{SS_{\\text{res}}}{SS_{\\text{tot}}}"]},
   ];
 
-  /* ══════════════════════════════════════════
-     GREEK ALPHABET
-  ══════════════════════════════════════════ */
   const GREEK=[
     {uc:'α',lc:'',name:'Alpha',  latex:'\\alpha',  uses:'Significance level α, learning rate, angles'},
     {uc:'β',lc:'',name:'Beta',   latex:'\\beta',   uses:'Regression coefficients, Type II error rate'},
@@ -878,9 +855,6 @@
     {uc:'∇',lc:'',name:'Nabla', latex:'\\nabla',  uses:'Gradient ∇f, Laplacian ∇², del operator'},
   ];
 
-  /* ══════════════════════════════════════════
-     NOTATION VARIANTS
-  ══════════════════════════════════════════ */
   const VARIANTS=[
     {group:'∼ (tilde)',rows:[
         {symbol:'X\\sim p',  field:'Probability/Stats', meaning:'X is distributed according to p. The most common use in ML/stats.'},
@@ -935,9 +909,6 @@
       ]},
   ];
 
-  /* ══════════════════════════════════════════
-     ABBREVIATIONS
-  ══════════════════════════════════════════ */
   const ABBRS=[
     {term:'CDF',  def:'Cumulative Distribution Function'},
     {term:'PDF',  def:'Probability Density Function'},
@@ -997,9 +968,6 @@
     {term:'LLN',  def:'Law of Large Numbers'},
   ];
 
-  /* ══════════════════════════════════════════
-     HELPERS
-  ══════════════════════════════════════════ */
   function rk(latex){
     try{return katex.renderToString(latex,{throwOnError:false});}
     catch(e){return`<code>${latex}</code>`;}
@@ -1023,7 +991,6 @@
       probability:'Probability',linalg:'Linear Algebra',statistics:'Statistics',misc:'General'}[cat]||cat;
   }
 
-  /* unicode fallbacks */
   const UNI={'\\equiv':'≡','\\lnot':'¬','\\land':'∧','\\lor':'∨','\\oplus':'⊕','\\to':'→',
     '\\leftrightarrow':'↔','\\forall':'∀','\\exists':'∃','\\therefore':'∴','\\Rightarrow':'⇒',
     '\\Leftrightarrow':'⟺','\\in':'∈','\\notin':'∉','\\subseteq':'⊆','\\subset':'⊂',
@@ -1042,9 +1009,6 @@
     return m?m[0]:latex;
   }
 
-  /* ══════════════════════════════════════════
-     COPY / TOAST
-  ══════════════════════════════════════════ */
   function showToast(msg){
     const t=document.getElementById('toast');
     t.textContent=msg; t.classList.add('show');
@@ -1059,9 +1023,6 @@
     }).catch(()=>showToast('Copy failed'));
   }
 
-  /* ══════════════════════════════════════════
-     EXPORT
-  ══════════════════════════════════════════ */
   function getFiltered(){
     const q=searchQuery.toLowerCase();
     return SYMBOLS.filter(s=>{
@@ -1098,9 +1059,6 @@
     showToast(`Exported ${rows.length} symbols as JSON`);
   }
 
-  /* ══════════════════════════════════════════
-     URL STATE
-  ══════════════════════════════════════════ */
   function pushState(){
     const p=new URLSearchParams();
     if(activeFilter!=='all') p.set('cat',activeFilter);
@@ -1124,14 +1082,8 @@
     });
   }
 
-  /* ══════════════════════════════════════════
-     STATE
-  ══════════════════════════════════════════ */
   let activeFilter='all',searchQuery='',allExpanded=false,activeTab='symbols';
 
-  /* ══════════════════════════════════════════
-     RENDER: SYMBOLS
-  ══════════════════════════════════════════ */
   function updateFilterCounts(){
     document.querySelectorAll('.filter-btn').forEach(b=>{
       const cat=b.dataset.cat;
@@ -1206,9 +1158,6 @@
     document.getElementById('c'+i).classList.toggle('expanded');
   }
 
-  /* ══════════════════════════════════════════
-     RENDER: GREEK
-  ══════════════════════════════════════════ */
   function renderGreek(){
     const tbody=document.querySelector('#greek-table tbody');
     tbody.innerHTML=GREEK.map(g=>`<tr>
@@ -1223,9 +1172,6 @@
   </tr>`).join('');
   }
 
-  /* ══════════════════════════════════════════
-     RENDER: VARIANTS
-  ══════════════════════════════════════════ */
   function renderVariants(){
     const el=document.getElementById('variants-content');
     el.innerHTML=VARIANTS.map(v=>`
@@ -1241,9 +1187,6 @@
   `).join('');
   }
 
-  /* ══════════════════════════════════════════
-     RENDER: ABBREVIATIONS
-  ══════════════════════════════════════════ */
   function renderAbbr(){
     const grid=document.getElementById('abbr-grid');
     const seen=new Set();
@@ -1255,10 +1198,6 @@
   </div>`).join('');
   }
 
-  /* ══════════════════════════════════════════
-     EVENTS
-  ══════════════════════════════════════════ */
-  // tabs
   function switchTab(tab){
     activeTab=tab;
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
@@ -1272,7 +1211,6 @@
   }
   document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
 
-  // filters
   document.querySelectorAll('.filter-btn').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
@@ -1283,32 +1221,27 @@
     render();
   }));
 
-  // search
   document.getElementById('search').addEventListener('input',e=>{
     searchQuery=e.target.value;
     render();
   });
 
-  // keyboard shortcuts
   document.addEventListener('keydown',e=>{
     const inp=document.getElementById('search');
     if(e.key==='/'&&document.activeElement!==inp){e.preventDefault();inp.focus();}
     if(e.key==='Escape'){inp.blur();}
   });
 
-  // toggle all
   document.getElementById('toggle-all-btn').addEventListener('click',()=>{
     allExpanded=!allExpanded;
     document.getElementById('toggle-all-btn').textContent=allExpanded?'Collapse all':'Expand all';
     document.querySelectorAll('.card').forEach(c=>c.classList.toggle('expanded',allExpanded));
   });
 
-  // export
   function exportMarkdown(){
     const rows=getFiltered();
     const mdEsc=s=>(s||'').replace(/\|/g,'\\|').replace(/\n/g,' ');
 
-    // Group by category
     const groups={};
     rows.forEach(s=>{
       const label=catLabel(s.category);
@@ -1342,24 +1275,16 @@
   document.getElementById('btn-json').addEventListener('click',exportJSON);
   document.getElementById('btn-md').addEventListener('click',exportMarkdown);
 
-  // font size dropdown
   document.getElementById('fs-select').addEventListener('change',()=>{
     const px=document.getElementById('fs-select').value;
     document.documentElement.style.fontSize=px+'px';
     localStorage.setItem('mg-fs',px);
   });
 
-  // back to top
   window.addEventListener('scroll',()=>{
     document.getElementById('back-top').classList.toggle('visible',window.scrollY>400);
   });
 
-  /* ══════════════════════════════════════════
-     BOOT
-  ══════════════════════════════════════════ */
-  /* ══════════════════════════════════════════
-     EQUATIONS DATA
-  ══════════════════════════════════════════ */
   const EQUATIONS=[
     {n:1, name:"Pythagoras's Theorem", author:"Pythagoras", year:"530 BC",
       formula:"a^2 + b^2 = c^2",
@@ -1431,9 +1356,6 @@
       example:"Stock options trading: before Black-Scholes (1973), option prices were set by intuition. Now every options trading platform uses this formula (or derivatives of it) to quote prices in real time. The formula earned Scholes and Merton the 1997 Nobel Prize in Economics."},
   ];
 
-  /* ══════════════════════════════════════════
-     RENDER: EQUATIONS
-  ══════════════════════════════════════════ */
   function renderEquations(){
     const grid=document.getElementById('eq-grid');
     grid.className='eq-grid';
