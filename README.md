@@ -1,21 +1,45 @@
 # MathGlyph
 
-A single-page mathematical notation reference — with KaTeX-rendered symbols, LaTeX source, explanations, and worked examples across 8 categories.
+MathGlyph is a static single-page mathematical notation reference with KaTeX-rendered formulas, LaTeX source, explanations, and worked examples.
 
 ## Features
 
-- **114 symbols** across Logic, Set Theory, Linear Algebra, Calculus, Probability, Statistics, Algebra, and General notation
-- **Search** by name, symbol, or LaTeX string
-- **Category filters** with live result counts
-- **Expandable cards** showing LaTeX source, meaning, explanation, and examples
-- **Greek letters**, **notation variants**, **abbreviations**, and **famous equations** tabs
-- **Copy to clipboard** for any LaTeX snippet
-- **Font size control** and **print view** (symbols tab only, hides UI chrome)
-- Fully responsive — 4 → 3 → 2 → 1 column grid
+- **147 symbols** across Logic, Set Theory, Algebra, Calculus, Linear Algebra, Probability, Statistics, and General notation
+- **24 Greek letters** with names, LaTeX commands, and common uses
+- **54 abbreviations** spanning statistics, ML, econometrics, and general math
+- **17 famous equations** with historical context and real-world examples
+- Search by symbol/name/meaning, category filters, and tabbed sections
+- Expandable symbol cards with:
+  - rendered formula
+  - LaTeX + Unicode copy actions
+  - explanations, examples, use-cases, and source references
+- One-click export of the current filtered symbols to **CSV**, **JSON**, and **Markdown**
+- URL + local persistence for active tab/filter/search/font size
+- Print mode optimized for the symbols view
 
-## Usage
+## Run locally
 
-Open `index.html` directly in a browser. No build step, no server required.
+No build step, package manager, or server is required.
+
+1. Open `index.html` directly in a browser.
+2. Refresh to see changes after editing files.
+
+## Project structure
+
+- `index.html` — layout, tabs/panels, toolbar controls, CDN links, and script loading order
+- `src\style\style.css` — theme tokens, responsive grid/card/table styles, print styles
+- `src\js\data.js` — source datasets (`SOURCES`, `SYMBOLS`, `GREEK`, `VARIANTS`, `ABBRS`, `EQUATIONS`)
+- `src\js\utils.js` — KaTeX rendering helper, escaping, category labels, Unicode mapping, clipboard/toast helpers
+- `src\js\render.js` — rendering functions for symbols, greek table, variants, abbreviations, equations
+- `src\js\export.js` — CSV/JSON/Markdown export from the current filtered symbol set
+- `src\js\app.js` — state management, URL/localStorage sync, events, boot sequence
+- `MATH.md` — generated Markdown export snapshot
+
+## Data model (symbols)
+
+Each entry in `SYMBOLS` follows:
+
+`symbol`, `name`, `category`, `pkg`, `usedIn`, `sources`, `meaning`, `explanation`, `examples`
 
 ## Sources
 
@@ -29,7 +53,7 @@ Open `index.html` directly in a browser. No build step, no server required.
 | *Notation in Econometrics* (2002) | Abadir & Magnus |
 | *Glossary of Mathematical Symbols* | Wikipedia |
 
-## Dependencies (CDN)
+## CDN dependencies
 
-- [KaTeX 0.16.9](https://katex.org/) — math rendering
-- [Google Fonts](https://fonts.google.com/) — Lora, DM Sans, JetBrains Mono
+- [KaTeX 0.16.9](https://katex.org/) for math rendering
+- [Google Fonts](https://fonts.google.com/) for Lora, DM Sans, and JetBrains Mono
