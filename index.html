@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathGlyph — Mathematical Notation Reference</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <style>
+        /* ── VARIABLES ── */
+        :root{
+            --bg:#f7f4ee;--surface:#fff;--surface-alt:#f0ece3;--surface-hover:#fdfbf8;--surface-expanded:#eef3fb;
+            --text-primary:#18160f;--text-secondary:#54504a;--text-muted:#9e9890;
+            --accent:#253d6b;--accent-mid:#3a5898;--accent-light:#dce6f5;
+            --border:#ddd8ce;--border-strong:#c4beb3;
+            --radius-sm:8px;--radius-md:12px;
+            --tag-logic-c:#163356;  --tag-logic-bg:#d8eaf8;
+            --tag-set-c:#1e4a10;    --tag-set-bg:#d8f0d0;
+            --tag-algebra-c:#4a1040;--tag-algebra-bg:#f2d8ee;
+            --tag-calc-c:#4a2e00;   --tag-calc-bg:#fbeacc;
+            --tag-prob-c:#2e1050;   --tag-prob-bg:#e8d8f8;
+            --tag-linalg-c:#003030; --tag-linalg-bg:#c8ecec;
+            --tag-stats-c:#4a0000;  --tag-stats-bg:#f8d8d8;
+            --tag-misc-c:#303000;   --tag-misc-bg:#f0ecc0;
+        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text-primary);min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+        /* ── HEADER ── */
+        header{background:var(--accent);color:white;padding:3rem 2rem 2.5rem;text-align:center;position:relative;overflow:hidden;}
+        header::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border:60px solid rgba(255,255,255,0.05);border-radius:50%;}
+        header::after{content:'';position:absolute;bottom:-100px;left:-60px;width:340px;height:340px;border:70px solid rgba(255,255,255,0.035);border-radius:50%;}
+        .hd{font-family:'Lora',serif;font-size:1.4rem;opacity:0.15;letter-spacing:0.5em;display:block;margin-bottom:1rem;font-style:italic;}
+        header h1{font-family:'Lora',serif;font-size:2.4rem;font-weight:500;letter-spacing:-0.02em;margin-bottom:0.5rem;}
+        header p{font-size:0.9rem;font-weight:300;opacity:0.7;max-width:520px;margin:0 auto;line-height:1.7;}
+        .hstats{display:flex;justify-content:center;gap:2.5rem;margin-top:1.5rem;flex-wrap:wrap;}
+        .hstat{text-align:center;opacity:0.6;}
+        .hstat strong{display:block;font-family:'Lora',serif;font-size:1.5rem;font-weight:500;line-height:1;margin-bottom:0.15rem;}
+        .hstat span{font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;}
+
+        /* ── TOOLBAR ── */
+        .toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0.75rem 1.25rem;position:sticky;top:0;z-index:200;display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;}
+        .search-wrap{position:relative;flex:1;min-width:150px;max-width:300px;}
+        .search-wrap svg{position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--text-muted);fill:none;pointer-events:none;}
+        .search-wrap input{width:100%;padding:0.42rem 0.7rem 0.42rem 1.9rem;border:1px solid var(--border-strong);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:0.83rem;background:var(--bg);color:var(--text-primary);outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+        .search-wrap input::placeholder{color:var(--text-muted);}
+        .search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,61,107,0.1);}
+        .filter-row{display:flex;gap:0.28rem;flex-wrap:wrap;align-items:center;}
+        .filter-label{font-size:0.7rem;color:var(--text-muted);white-space:nowrap;margin-right:0.1rem;}
+        .filter-btn{padding:0.22rem 0.6rem;border-radius:20px;border:1px solid var(--border);background:transparent;font-family:'DM Sans',sans-serif;font-size:0.7rem;cursor:pointer;color:var(--text-secondary);transition:all 0.15s;line-height:1.5;}
+        .filter-btn:hover{border-color:var(--accent-mid);color:var(--accent);background:var(--accent-light);}
+        .filter-btn.active{background:var(--accent);color:white;border-color:var(--accent);}
+        .filter-btn .count{opacity:0.6;font-size:0.65rem;margin-left:2px;}
+        .toolbar-actions{display:flex;gap:0.4rem;align-items:center;margin-left:auto;flex-shrink:0;}
+        .tb-btn{display:flex;align-items:center;gap:0.3rem;padding:0.25rem 0.6rem;border-radius:var(--radius-sm);border:1px solid var(--border-strong);background:var(--bg);font-family:'DM Sans',sans-serif;font-size:0.7rem;cursor:pointer;color:var(--text-secondary);transition:all 0.15s;white-space:nowrap;}
+        .tb-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;flex-shrink:0;}
+        .tb-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+        .fs-control{display:flex;align-items:center;gap:0.35rem;}
+        .fs-control label{font-size:0.7rem;color:var(--text-muted);white-space:nowrap;}
+        .fs-control select{font-family:'DM Sans',sans-serif;font-size:0.75rem;color:var(--text-secondary);background:var(--bg);border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:0.22rem 0.35rem;cursor:pointer;outline:none;}
+        .fs-control select:focus{border-color:var(--accent);}
+
+        /* ── COUNT BAR ── */
+        .count-bar{font-size:0.75rem;color:var(--text-muted);padding:0 1.25rem;background:var(--surface-alt);border-bottom:1px solid var(--border);height:2rem;display:flex;align-items:center;gap:0.75rem;}
+        .count-bar b{color:var(--text-secondary);}
+        .count-bar-spacer{flex:1;}
+        .toggle-all-btn{font-size:0.72rem;color:var(--accent-mid);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0;}
+        .toggle-all-btn:hover{text-decoration:underline;}
+
+        /* ── TABS ── */
+        .tabs{display:flex;border-bottom:2px solid var(--border);background:var(--surface);padding:0 1.25rem;}
+        .tab-btn{padding:0.6rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.8rem;border:none;background:none;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s;}
+        .tab-btn:hover{color:var(--text-primary);}
+        .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:500;}
+
+        /* ── PANELS ── */
+        .panel{display:none;}
+        .panel.active{display:block;}
+
+        /* ── GRID — 4 columns ── */
+        .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
+        @media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
+        @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr);}}
+        @media(max-width:520px){.grid{grid-template-columns:1fr;}}
+
+        /* ── CARD ── */
+        .card{background:var(--surface);padding:1rem 1.1rem;cursor:pointer;transition:background 0.15s;}
+        .card:hover{background:var(--surface-hover);}
+        .card.expanded{background:var(--surface-expanded);}
+        .card-top{display:flex;align-items:center;gap:0.85rem;}
+
+        /* Symbol box */
+        .symbol-box{width:72px;height:72px;min-width:72px;border-radius:var(--radius-sm);background:var(--surface-alt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4px;}
+        .symbol-box .katex{color:var(--accent);}
+        .symbol-box.sz-base .katex{font-size:1.35rem;}
+        .symbol-box.sz-md   .katex{font-size:1.05rem;}
+        .symbol-box.sz-sm   .katex{font-size:0.82rem;}
+        .symbol-box.sz-xs   .katex{font-size:0.65rem;}
+
+        .card-info{flex:1;min-width:0;}
+        .card-name{font-size:0.82rem;font-weight:500;color:var(--text-primary);margin-bottom:0.2rem;}
+        .card-meaning{font-size:0.78rem;color:var(--text-secondary);line-height:1.5;font-weight:300;}
+        .card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:0.5rem;gap:0.3rem;flex-wrap:wrap;}
+        .card-tags{display:flex;gap:0.25rem;flex-wrap:wrap;}
+        .card-tag{display:inline-block;font-size:0.62rem;font-weight:500;padding:0.13rem 0.42rem;border-radius:10px;letter-spacing:0.03em;text-transform:uppercase;white-space:nowrap;}
+        .tag-logic   {color:var(--tag-logic-c);  background:var(--tag-logic-bg);}
+        .tag-set     {color:var(--tag-set-c);    background:var(--tag-set-bg);}
+        .tag-algebra {color:var(--tag-algebra-c);background:var(--tag-algebra-bg);}
+        .tag-calculus{color:var(--tag-calc-c);   background:var(--tag-calc-bg);}
+        .tag-probability{color:var(--tag-prob-c);background:var(--tag-prob-bg);}
+        .tag-linalg  {color:var(--tag-linalg-c); background:var(--tag-linalg-bg);}
+        .tag-statistics{color:var(--tag-stats-c);background:var(--tag-stats-bg);}
+        .tag-misc    {color:var(--tag-misc-c);   background:var(--tag-misc-bg);}
+        .tag-usedin  {color:#2a4060;background:#ddeeff;}
+        .expand-chevron{width:15px;height:15px;flex-shrink:0;stroke:var(--text-muted);fill:none;transition:transform 0.2s;}
+        .card.expanded .expand-chevron{transform:rotate(180deg);}
+
+        /* ── EXPANDED DETAIL ── */
+        .card-detail{display:none;margin-top:0.85rem;padding-top:0.85rem;border-top:1px solid var(--border);}
+        .card.expanded .card-detail{display:block;}
+        .detail-section{margin-bottom:0.75rem;}
+        .detail-section:last-child{margin-bottom:0;}
+        .detail-label{font-size:0.65rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;}
+        .detail-text{font-size:0.81rem;line-height:1.7;color:var(--text-secondary);font-weight:300;}
+
+        /* LaTeX copy row */
+        .latex-row{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;}
+        .latex-code{font-family:'JetBrains Mono',monospace;font-size:0.77rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;padding:0.22rem 0.55rem;color:var(--accent);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+        .copy-btn{display:flex;align-items:center;gap:0.22rem;padding:0.22rem 0.5rem;border-radius:5px;border:1px solid var(--border-strong);background:var(--bg);font-family:'DM Sans',sans-serif;font-size:0.68rem;cursor:pointer;color:var(--text-secondary);transition:all 0.15s;white-space:nowrap;flex-shrink:0;}
+        .copy-btn svg{width:10px;height:10px;stroke:currentColor;fill:none;}
+        .copy-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
+        .copy-btn.copied{background:#e8f8e8;border-color:#3a8a3a;color:#3a8a3a;}
+
+        /* pkg badge */
+        .pkg-badge{display:inline-flex;align-items:center;gap:0.25rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;background:#fff8e8;border:1px solid #e8d890;border-radius:4px;padding:0.15rem 0.45rem;color:#5a4800;}
+        .pkg-badge svg{width:9px;height:9px;stroke:currentColor;fill:none;}
+
+        /* examples */
+        .detail-example{background:#f8f6f0;border:1px solid var(--border);border-left:3px solid var(--accent-mid);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:0.5rem 0.85rem;font-family:'JetBrains Mono',monospace;font-size:0.76rem;color:var(--text-secondary);line-height:1.9;margin-bottom:0.3rem;}
+        .detail-example:last-child{margin-bottom:0;}
+        .detail-example .katex{font-size:0.84rem;color:var(--text-primary);}
+
+        /* source chips */
+        .source-chip{display:inline-flex;align-items:center;gap:0.25rem;font-size:0.64rem;background:#f0ece3;border:1px solid var(--border);border-radius:4px;padding:0.13rem 0.45rem;color:var(--text-muted);margin-right:0.25rem;margin-bottom:0.2rem;}
+        .source-chip svg{width:8px;height:8px;stroke:currentColor;fill:none;}
+
+        /* ── SECTION PANELS (greek, abbr, variants) ── */
+        .section-panel{padding:1.5rem 1.25rem;}
+        .section-panel h2{font-family:'Lora',serif;font-size:1.25rem;font-weight:500;margin-bottom:0.3rem;}
+        .section-desc{font-size:0.83rem;color:var(--text-muted);margin-bottom:1.25rem;font-weight:300;line-height:1.6;}
+        .ref-table{width:100%;border-collapse:collapse;font-size:0.83rem;}
+        .ref-table th{text-align:left;font-size:0.66rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);padding:0.45rem 0.7rem;border-bottom:2px solid var(--border);background:var(--surface-alt);}
+        .ref-table td{padding:0.5rem 0.7rem;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text-secondary);}
+        .ref-table tr:last-child td{border-bottom:none;}
+        .ref-table tr:hover td{background:var(--surface-hover);}
+        .sym-cell{font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:var(--accent);width:120px;min-width:120px;text-align:center;white-space:nowrap;}
+        .latex-cell{font-family:'JetBrains Mono',monospace;font-size:0.76rem;color:var(--text-muted);}
+        .name-cell{font-weight:500;color:var(--text-primary);min-width:80px;}
+        .use-cell{font-size:0.78rem;font-weight:300;}
+        .copy-cell{width:90px;text-align:right;white-space:nowrap;}
+        .tbl-copy{padding:0.15rem 0.42rem;border-radius:4px;border:1px solid var(--border);background:none;font-family:'DM Sans',sans-serif;font-size:0.66rem;cursor:pointer;color:var(--text-muted);transition:all 0.15s;margin-left:2px;}
+        .tbl-copy:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
+        .tbl-copy.copied{background:#e8f8e8;border-color:#3a8a3a;color:#3a8a3a;}
+
+        /* abbreviations */
+        .abbr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1px;background:var(--border);}
+        .abbr-card{background:var(--surface);padding:0.65rem 0.85rem;display:flex;gap:0.7rem;align-items:baseline;}
+        .abbr-term{font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:500;color:var(--accent);min-width:65px;flex-shrink:0;}
+        .abbr-def{font-size:0.78rem;color:var(--text-secondary);font-weight:300;line-height:1.4;}
+
+        /* variants table */
+        .variants-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-bottom:1.5rem;}
+        .variants-table th{text-align:left;font-size:0.65rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);padding:0.42rem 0.7rem;border-bottom:2px solid var(--border);background:var(--surface-alt);}
+        .variants-table td{padding:0.55rem 0.7rem;border-bottom:1px solid var(--border);vertical-align:top;}
+        .variants-table tr:hover td{background:var(--surface-hover);}
+        .variants-table .v-sym{font-size:1.15rem;width:50px;text-align:center;}
+        .variants-table .v-sym .katex{color:var(--accent);}
+        .variants-table .v-field{font-size:0.72rem;font-weight:500;white-space:nowrap;}
+        .variants-table .v-meaning{font-size:0.78rem;color:var(--text-secondary);font-weight:300;line-height:1.55;}
+        .variants-group-title{font-family:'Lora',serif;font-size:1rem;font-weight:500;margin:1.5rem 0 0.6rem;color:var(--accent);}
+        .variants-group-title:first-child{margin-top:0;}
+
+        /* no results */
+        .no-results{grid-column:1/-1;padding:4rem 2rem;text-align:center;color:var(--text-muted);}
+        .no-results .eg{font-family:'Lora',serif;font-size:3rem;display:block;margin-bottom:0.6rem;opacity:0.35;}
+
+        /* back to top */
+        #back-top{position:fixed;bottom:1.5rem;right:1.5rem;width:36px;height:36px;border-radius:50%;background:var(--accent);color:white;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:300;transition:opacity 0.2s,transform 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.18);}
+        #back-top.visible{display:flex;}
+        #back-top:hover{transform:translateY(-2px);}
+        #back-top svg{width:16px;height:16px;stroke:white;fill:none;}
+
+        /* toast */
+        #toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:#1a2e50;color:white;font-size:0.78rem;padding:0.5rem 1rem;border-radius:20px;opacity:0;transition:all 0.22s;pointer-events:none;z-index:999;white-space:nowrap;}
+        #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+        /* ── EQUATIONS ── */
+        .eq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1px;background:var(--border);}
+        .eq-card{background:var(--surface);padding:1.1rem 1.25rem;}
+        .eq-card:hover{background:var(--surface-hover);}
+        .eq-header{display:flex;align-items:flex-start;gap:0.9rem;margin-bottom:0.75rem;}
+        .eq-number{font-family:'Lora',serif;font-size:1.4rem;font-weight:500;color:var(--accent);opacity:0.35;line-height:1;min-width:1.8rem;flex-shrink:0;padding-top:2px;}
+        .eq-title-block{flex:1;min-width:0;}
+        .eq-name{font-size:0.88rem;font-weight:500;color:var(--text-primary);margin-bottom:0.1rem;}
+        .eq-meta{font-size:0.72rem;color:var(--text-muted);font-style:italic;}
+        .eq-formula{background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.6rem 1rem;margin-bottom:0.75rem;text-align:center;overflow-x:auto;}
+        .eq-formula .katex{font-size:1.05rem;color:var(--text-primary);}
+        .eq-sections{display:flex;flex-direction:column;gap:0.55rem;}
+        .eq-section-label{font-size:0.65rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.2rem;}
+        .eq-section-text{font-size:0.8rem;color:var(--text-secondary);font-weight:300;line-height:1.6;}
+        .eq-example{background:#f8f6f0;border:1px solid var(--border);border-left:3px solid var(--accent-mid);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:0.45rem 0.8rem;font-size:0.78rem;color:var(--text-secondary);font-weight:300;line-height:1.6;margin-top:0.2rem;}
+
+        /* ── HEADER MATH ── */
+        #header-desc .hmath .katex{color:rgba(255,255,255,0.85);font-size:0.82em;}
+
+        /* ── FOOTER ── */
+        footer{background:var(--surface-alt);border-top:1px solid var(--border);padding:1.25rem 2rem;text-align:center;font-size:0.72rem;color:var(--text-muted);line-height:1.8;font-weight:300;}
+        footer em{color:var(--text-secondary);font-style:italic;}
+
+        /* ── PRINT ── */
+        @media print{
+            header{background:#253d6b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+            .toolbar,.tabs,.count-bar,#back-top,#toast,footer{display:none!important;}
+            .panel{display:block!important;}
+            #panel-symbols .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:#ccc;}
+            .card{break-inside:avoid;padding:0.6rem 0.7rem;border:none;}
+            .card-detail{display:block!important;}
+            .expand-chevron,.copy-btn,.source-chip,.pkg-badge,.tb-btn{display:none!important;}
+            .symbol-box{width:48px;height:48px;min-width:48px;}
+            .symbol-box.sz-base .katex{font-size:1rem;}
+            #panel-greek,.section-panel{break-before:page;}
+            .ref-table,.variants-table,.abbr-grid{font-size:0.75rem;}
+            body{font-size:12px;}
+            .card-meaning{font-size:0.72rem;}
+            .detail-example{padding:0.3rem 0.6rem;font-size:0.7rem;}
+        }
+    </style>
+</head>
+<body>
+<div id="toast"></div>
+<button id="back-top" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<header>
+    <span class="hd">∑ ∫ ∂ ∞ ∈ ∀ ∃ ∇ ⊗ ≡ α β γ ±</span>
+    <h1>MathGlyph</h1>
+    <p id="header-desc">A reference guide to mathematical symbols and notation — with LaTeX source, explanations, Greek letters, abbreviations, notation variants, and worked examples.</p>
+    <div class="hstats">
+        <div class="hstat"><strong id="stat-symbols">110+</strong><span>Symbols</span></div>
+        <div class="hstat"><strong>24</strong><span>Greek Letters</span></div>
+        <div class="hstat"><strong>50+</strong><span>Abbreviations</span></div>
+        <div class="hstat"><strong>8</strong><span>Categories</span></div>
+    </div>
+</header>
+
+<div class="toolbar">
+    <div class="search-wrap">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="search" placeholder="Search… (Press /)" autocomplete="off">
+    </div>
+    <div class="filter-row" id="filter-row">
+        <span class="filter-label">Filter:</span>
+        <button class="filter-btn active" data-cat="all">All</button>
+        <button class="filter-btn" data-cat="logic">Logic</button>
+        <button class="filter-btn" data-cat="set">Sets</button>
+        <button class="filter-btn" data-cat="linalg">Linear Algebra</button>
+        <button class="filter-btn" data-cat="calculus">Calculus</button>
+        <button class="filter-btn" data-cat="probability">Probability</button>
+        <button class="filter-btn" data-cat="statistics">Statistics</button>
+        <button class="filter-btn" data-cat="algebra">Algebra</button>
+        <button class="filter-btn" data-cat="misc">General</button>
+    </div>
+    <div class="toolbar-actions">
+        <div class="fs-control">
+            <label for="fs-select">Size</label>
+            <select id="fs-select">
+                <option value="12">12px</option>
+                <option value="13">13px</option>
+                <option value="14">14px</option>
+                <option value="15">15px</option>
+                <option value="16" selected>16px</option>
+                <option value="17">17px</option>
+                <option value="18">18px</option>
+                <option value="19">19px</option>
+                <option value="20">20px</option>
+            </select>
+        </div>
+        <button class="tb-btn" onclick="window.print()">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print
+        </button>
+        <button class="tb-btn" id="btn-csv">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CSV
+        </button>
+        <button class="tb-btn" id="btn-json">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            JSON
+        </button>
+        <button class="tb-btn" id="btn-md">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Markdown
+        </button>
+    </div>
+</div>
+
+<div class="tabs">
+    <button class="tab-btn active" data-tab="symbols">Symbols</button>
+    <button class="tab-btn" data-tab="greek">Greek Alphabet</button>
+    <button class="tab-btn" data-tab="variants">Notation Variants</button>
+    <button class="tab-btn" data-tab="abbr">Abbreviations</button>
+    <button class="tab-btn" data-tab="equations">Famous Equations</button>
+</div>
+
+<div class="count-bar" id="count-bar">
+    <span id="count-text">Loading…</span>
+    <span class="count-bar-spacer"></span>
+    <button class="toggle-all-btn" id="toggle-all-btn">Expand all</button>
+</div>
+
+<div class="panel active" id="panel-symbols"><div class="grid" id="grid"></div></div>
+
+<div class="panel" id="panel-greek">
+    <div class="section-panel">
+        <h2>Greek Alphabet</h2>
+        <p class="section-desc">All 24 Greek letters plus Nabla — with names, LaTeX commands, and their most common mathematical uses. Click the copy buttons for the LaTeX command or the Unicode character.</p>
+        <table class="ref-table" id="greek-table">
+            <thead><tr><th style="width:120px;white-space:nowrap">Symbol</th><th>Name</th><th>LaTeX</th><th>Common uses in mathematics</th><th></th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="panel" id="panel-variants">
+    <div class="section-panel">
+        <h2>Notation Variants</h2>
+        <p class="section-desc">The same symbol can mean different things depending on the field. These are the most common sources of confusion when reading across disciplines.</p>
+        <div id="variants-content"></div>
+    </div>
+</div>
+
+<div class="panel" id="panel-abbr">
+    <div class="section-panel">
+        <h2>Common Abbreviations</h2>
+        <p class="section-desc">Abbreviations from statistics, machine learning, econometrics, and general mathematics — drawn from all six source documents.</p>
+        <div class="abbr-grid" id="abbr-grid"></div>
+    </div>
+</div>
+
+<div class="panel" id="panel-equations">
+    <div class="section-panel">
+        <h2>17 Equations That Changed the World</h2>
+        <p class="section-desc">From Ian Stewart's book — the most influential equations in the history of mathematics and science, with descriptions and real-world examples.</p>
+        <div id="eq-grid"></div>
+    </div>
+</div>
+<script>
+
+  /* ══════════════════════════════════════════
+     SOURCES
+  ══════════════════════════════════════════ */
+  const SOURCES={
+    grami:{short:'Grami 2022',title:'Discrete Mathematics'},
+    murphy:{short:'Murphy 2023',title:'Probabilistic Machine Learning'},
+    aronow:{short:'Aronow 2019',title:'Foundations of Agnostic Statistics'},
+    holz:{short:'Holzinger 2017',title:'ML Notation'},
+    stats:{short:'OpenStax',title:'Introductory Statistics'},
+    abadir:{short:'Abadir 2002',title:'Notation in Econometrics'},
+    wiki:{short:'Wikipedia',title:'Glossary of Mathematical Symbols'},
+  };
+
+  /* ══════════════════════════════════════════
+     LATEX PACKAGES
+     pkg: null = built-in, 'amsmath','amssymb','mathbb' etc
+  ══════════════════════════════════════════ */
+
+  /* ══════════════════════════════════════════
+     SYMBOLS DATA
+  ══════════════════════════════════════════ */
+  const SYMBOLS=[
+    // ── LOGIC ──
+    {symbol:"p \\equiv q",name:"Logical Equivalence",category:"logic",pkg:null,usedIn:["Logic","CS"],sources:["grami"],
+      meaning:"p and q are logically equivalent — same truth value in all cases.",
+      explanation:"Two statements are logically equivalent when their truth tables are identical.",
+      examples:["(p \\to q) \\equiv (\\lnot q \\to \\lnot p)"]},
+    {symbol:"\\lnot p",name:"Negation (NOT)",category:"logic",pkg:null,usedIn:["Logic","CS"],sources:["grami","holz","wiki"],
+      meaning:"Logical NOT of p. True when p is false, false when p is true.",
+      explanation:"Negation inverts the truth value. The simplest logical connective.",
+      examples:["\\lnot(p\\land q)\\equiv\\lnot p\\lor\\lnot q"]},
+    {symbol:"p \\land q",name:"Conjunction (AND)",category:"logic",pkg:null,usedIn:["Logic","CS"],sources:["grami","holz","wiki"],
+      meaning:"p AND q. True only when both p and q are simultaneously true.",
+      explanation:"Corresponds to set intersection. False unless both operands are true.",
+      examples:["\\mathrm{T}\\land\\mathrm{F}=\\mathrm{F}"]},
+    {symbol:"p \\lor q",name:"Disjunction (OR)",category:"logic",pkg:null,usedIn:["Logic","CS"],sources:["grami","holz","wiki"],
+      meaning:"p OR q. True when at least one of p or q is true (inclusive OR).",
+      explanation:"False only when both propositions are false.",
+      examples:["\\mathrm{F}\\lor\\mathrm{F}=\\mathrm{F}"]},
+    {symbol:"p \\oplus q",name:"Exclusive OR (XOR)",category:"logic",pkg:"amssymb",usedIn:["Logic","CS","Crypto"],sources:["grami"],
+      meaning:"True when exactly one of p or q is true, but not both.",
+      explanation:"Unlike inclusive OR, XOR is false when both are true.",
+      examples:["\\mathrm{T}\\oplus\\mathrm{T}=\\mathrm{F}","\\mathrm{T}\\oplus\\mathrm{F}=\\mathrm{T}"]},
+    {symbol:"p \\to q",name:"Implication",category:"logic",pkg:null,usedIn:["Logic","Proofs"],sources:["grami","wiki"],
+      meaning:"p implies q. If p is true then q must be true.",
+      explanation:"False only when p is true and q is false. A false hypothesis makes it vacuously true.",
+      examples:["p\\to q \\equiv \\lnot p\\lor q"]},
+    {symbol:"p \\leftrightarrow q",name:"Biconditional (IFF)",category:"logic",pkg:null,usedIn:["Logic","Proofs"],sources:["grami","aronow","wiki"],
+      meaning:"p if and only if q. True when p and q share the same truth value.",
+      explanation:"Equivalent to (p→q)∧(q→p).",
+      examples:["2x=10 \\iff x=5"]},
+    {symbol:"\\forall x\\,P(x)",name:"Universal Quantifier",category:"logic",pkg:null,usedIn:["Logic","Proofs","CS"],sources:["grami","aronow","wiki"],
+      meaning:"For all x, P(x) holds — every element in the domain satisfies P.",
+      explanation:"One counterexample disproves a universal statement.",
+      examples:["\\forall x\\in\\mathbb{R},\\;x^2\\ge 0"]},
+    {symbol:"\\exists x\\,P(x)",name:"Existential Quantifier",category:"logic",pkg:null,usedIn:["Logic","Proofs"],sources:["grami","aronow","wiki"],
+      meaning:"There exists at least one x for which P(x) is true.",
+      explanation:"Only requires one witness.",
+      examples:["\\exists\\,x>0:\\;x^2-3x-1=0"]},
+    {symbol:"\\exists!x\\,P(x)",name:"Unique Existential",category:"logic",pkg:null,usedIn:["Logic"],sources:["grami"],
+      meaning:"There exists exactly one x satisfying P(x).",
+      explanation:"Combines existence with uniqueness.",
+      examples:["\\exists!\\,x\\in\\mathbb{R}:\\;x+5=7\\;(x=2)"]},
+    {symbol:"\\therefore",name:"Therefore",category:"logic",pkg:null,usedIn:["Proofs"],sources:["grami"],
+      meaning:"Introduces a conclusion that follows from preceding premises.",
+      explanation:"Standard in mathematical proofs. Written ∴.",
+      examples:["p\\to q,\\;p\\;\\therefore\\;q"]},
+    {symbol:"\\Rightarrow",name:"Implies (formal)",category:"logic",pkg:null,usedIn:["Proofs","Sets"],sources:["aronow","holz","wiki"],
+      meaning:"Formal logical implication — separates hypothesis from conclusion.",
+      explanation:"Stronger or more formal than →. Used in proof writing.",
+      examples:["A\\subseteq B\\land B\\subseteq C\\Rightarrow A\\subseteq C"]},
+    {symbol:"\\Leftrightarrow",name:"IFF (formal)",category:"logic",pkg:null,usedIn:["Proofs"],sources:["aronow","wiki"],
+      meaning:"Logical equivalence — each side implies the other.",
+      explanation:"Two-headed arrow used in formal proofs.",
+      examples:["A=B\\Leftrightarrow A\\subseteq B\\land B\\subseteq A"]},
+    // ── NEW from Wikipedia: arithmetic/comparison ──
+    {symbol:"\\pm",name:"Plus-Minus",category:"misc",pkg:null,usedIn:["Analysis","Stats","Physics"],sources:["wiki"],
+      meaning:"Denotes alternatives: both plus and minus. Also denotes measurement uncertainty.",
+      explanation:"10 ± 2 means the value lies between 8 and 12. In quadratic formula gives both roots.",
+      examples:["x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}"]},
+    {symbol:"\\neq",name:"Not Equal",category:"misc",pkg:null,usedIn:["All fields"],sources:["wiki"],
+      meaning:"a ≠ b means a and b are not equal.",
+      explanation:"The negation of =. Used to assert two expressions have different values.",
+      examples:["\\pi \\neq 3","\\sqrt{2} \\neq \\frac{p}{q}\\text{ for any integers }p,q"]},
+    {symbol:"\\leq",name:"Less Than or Equal",category:"misc",pkg:null,usedIn:["Analysis","Algebra","Stats"],sources:["wiki"],
+      meaning:"a ≤ b means a is less than or equal to b.",
+      explanation:"Combines strict inequality with equality. The non-strict version of <.",
+      examples:["\\forall x\\in[0,1],\\;x\\leq 1","n\\leq m\\Rightarrow 2^n\\leq 2^m"]},
+    {symbol:"\\geq",name:"Greater Than or Equal",category:"misc",pkg:null,usedIn:["Analysis","Algebra","Stats"],sources:["wiki"],
+      meaning:"a ≥ b means a is greater than or equal to b.",
+      explanation:"Combines strict inequality with equality. The non-strict version of >.",
+      examples:["x^2\\geq 0\\text{ for all }x\\in\\mathbb{R}"]},
+    {symbol:"\\ll,\\,\\gg",name:"Much Less / Greater Than",category:"misc",pkg:null,usedIn:["Analysis","Physics","Asymptotics"],sources:["wiki"],
+      meaning:"a ≪ b means a is much smaller than b (by orders of magnitude).",
+      explanation:"Not formally defined — means the smaller quantity can be neglected. Used in approximation theory.",
+      examples:["\\epsilon\\ll 1\\text{ in perturbation theory}","n\\ll 2^n"]},
+    {symbol:"\\sqrt{x}",name:"Square Root",category:"algebra",pkg:null,usedIn:["All fields"],sources:["wiki"],
+      meaning:"The non-negative number whose square equals x.",
+      explanation:"The principal square root. For nth root, use \\sqrt[n]{x}.",
+      examples:["\\sqrt{4}=2,\\quad\\sqrt{2}\\approx 1.414","\\sqrt[3]{8}=2"]},
+    {symbol:"\\cong",name:"Isomorphic / Congruent",category:"algebra",pkg:null,usedIn:["Geometry","Algebra"],sources:["wiki"],
+      meaning:"Denotes isomorphism between structures, or congruence of geometric shapes.",
+      explanation:"Two objects are isomorphic if there is a structure-preserving bijection between them.",
+      examples:["\\mathbb{Z}/2\\mathbb{Z}\\cong\\{0,1\\}","\\triangle ABC\\cong\\triangle DEF"]},
+    {symbol:"\\sim",name:"Asymptotic / Distributed As",category:"misc",pkg:null,usedIn:["Analysis","Probability","Stats"],sources:["wiki","murphy"],
+      meaning:"Context-dependent: asymptotic equivalence (f ∼ g), or distributed as (X ∼ p).",
+      explanation:"In analysis: f(x)/g(x) → 1. In probability: X has distribution p. One of the most context-sensitive symbols.",
+      examples:["n! \\sim \\sqrt{2\\pi n}(n/e)^n\\text{ (Stirling)}","X\\sim\\mathcal{N}(0,1)"]},
+    // ── SETS ──
+    {symbol:"x \\in A",name:"Set Membership",category:"set",pkg:null,usedIn:["Sets","Analysis"],sources:["grami","aronow","wiki"],
+      meaning:"x is an element of set A.",
+      explanation:"The fundamental relation of set theory.",
+      examples:["2\\in\\{1,2,4\\}","\\pi\\in\\mathbb{R}"]},
+    {symbol:"x \\notin A",name:"Not a Member",category:"set",pkg:null,usedIn:["Sets"],sources:["grami","aronow","wiki"],
+      meaning:"x does not belong to set A.",
+      explanation:"Negation of set membership.",
+      examples:["\\sqrt{2}\\notin\\mathbb{Q}","5\\notin\\{1,2,3,4\\}"]},
+    {symbol:"A \\subseteq B",name:"Subset",category:"set",pkg:null,usedIn:["Sets","Proofs"],sources:["grami","aronow","wiki"],
+      meaning:"Every element of A is also in B.",
+      explanation:"A=B iff A⊆B and B⊆A. Every set is a subset of itself.",
+      examples:["\\mathbb{N}\\subseteq\\mathbb{Z}\\subseteq\\mathbb{Q}\\subseteq\\mathbb{R}"]},
+    {symbol:"A \\subset B",name:"Proper Subset",category:"set",pkg:null,usedIn:["Sets"],sources:["grami","aronow","wiki"],
+      meaning:"A is strictly contained in B — A ≠ B.",
+      explanation:"At least one element of B is not in A.",
+      examples:["\\{1,2\\}\\subset\\{1,2,3\\}","\\mathbb{N}\\subset\\mathbb{Z}"]},
+    {symbol:"A \\cup B",name:"Union",category:"set",pkg:null,usedIn:["Sets","Probability"],sources:["grami","aronow","wiki"],
+      meaning:"All elements in A, in B, or in both.",
+      explanation:"Associative and commutative. A∪∅=A.",
+      examples:["\\{1,2,5\\}\\cup\\{2,3\\}=\\{1,2,3,5\\}"]},
+    {symbol:"A \\cap B",name:"Intersection",category:"set",pkg:null,usedIn:["Sets","Probability"],sources:["grami","aronow","wiki"],
+      meaning:"All elements simultaneously in both A and B.",
+      explanation:"If A∩B=∅ the sets are disjoint.",
+      examples:["\\{1,2,5,6\\}\\cap\\{2,3,6\\}=\\{2,6\\}"]},
+    {symbol:"A \\setminus B",name:"Set Difference",category:"set",pkg:null,usedIn:["Sets"],sources:["grami","aronow","wiki"],
+      meaning:"Elements in A that are not in B.",
+      explanation:"Equal to A∩B^c.",
+      examples:["\\{1,2,3,4\\}\\setminus\\{2,4\\}=\\{1,3\\}"]},
+    {symbol:"A^c",name:"Complement",category:"set",pkg:null,usedIn:["Sets","Probability"],sources:["grami","aronow","wiki"],
+      meaning:"All elements of the universal set U not in A.",
+      explanation:"A^c={s∈U:s∉A}. A∪A^c=U and A∩A^c=∅.",
+      examples:["U=\\{1..5\\},A=\\{1,3\\}\\Rightarrow A^c=\\{2,4,5\\}"]},
+    {symbol:"A \\triangle B",name:"Symmetric Difference",category:"set",pkg:"amssymb",usedIn:["Sets"],sources:["grami","wiki"],
+      meaning:"Elements in A or B but not in both.",
+      explanation:"A△B=(A\\B)∪(B\\A).",
+      examples:["\\{1,2,3\\}\\triangle\\{2,3,4\\}=\\{1,4\\}"]},
+    {symbol:"\\emptyset",name:"Empty Set",category:"set",pkg:"amssymb",usedIn:["Sets","Logic"],sources:["grami","aronow","wiki"],
+      meaning:"The unique set containing no elements.",
+      explanation:"∅ is a subset of every set. |∅|=0.",
+      examples:["A\\cup\\emptyset=A","A\\cap\\emptyset=\\emptyset"]},
+    {symbol:"|A|",name:"Cardinality",category:"set",pkg:null,usedIn:["Sets","Combinatorics"],sources:["grami","aronow","wiki"],
+      meaning:"The number of elements in set A.",
+      explanation:"|𝒫(A)|=2^|A|.",
+      examples:["|\\{1,2,3,5,6,8\\}|=6","|A\\times B|=|A|\\cdot|B|"]},
+    {symbol:"\\mathcal{P}(A)",name:"Power Set",category:"set",pkg:"amsmath",usedIn:["Sets","Combinatorics"],sources:["grami","aronow"],
+      meaning:"The set of all subsets of A, including ∅ and A itself.",
+      explanation:"If |A|=n then |𝒫(A)|=2^n.",
+      examples:["\\mathcal{P}(\\{1,2\\})=\\{\\emptyset,\\{1\\},\\{2\\},\\{1,2\\}\\}"]},
+    {symbol:"A \\times B",name:"Cartesian Product",category:"set",pkg:null,usedIn:["Sets","Functions"],sources:["grami","wiki"],
+      meaning:"All ordered pairs (a,b) with a∈A and b∈B.",
+      explanation:"|A×B|=|A|·|B|.",
+      examples:["\\{1,2\\}\\times\\{a,b\\}=\\{(1,a),(1,b),(2,a),(2,b)\\}"]},
+    {symbol:"\\mathbb{N}",name:"Natural Numbers",category:"set",pkg:"amssymb",usedIn:["Number Theory","Analysis"],sources:["grami","aronow","abadir","wiki"],
+      meaning:"Positive integers {1, 2, 3, …}.",
+      explanation:"Some conventions include 0; check the source.",
+      examples:["1\\in\\mathbb{N},\\quad -3\\notin\\mathbb{N}"]},
+    {symbol:"\\mathbb{Z}",name:"Integers",category:"set",pkg:"amssymb",usedIn:["Number Theory","Algebra"],sources:["grami","aronow","abadir","wiki"],
+      meaning:"All integers {…, −2, −1, 0, 1, 2, …}.",
+      explanation:"From German Zahlen. Includes all whole numbers.",
+      examples:["-5\\in\\mathbb{Z},\\quad 1.5\\notin\\mathbb{Z}"]},
+    {symbol:"\\mathbb{Q}",name:"Rational Numbers",category:"set",pkg:"amssymb",usedIn:["Analysis"],sources:["grami","abadir","wiki"],
+      meaning:"Numbers expressible as p/q, p,q∈ℤ, q≠0.",
+      explanation:"Includes all fractions and repeating decimals.",
+      examples:["\\tfrac{1}{2}\\in\\mathbb{Q},\\quad\\sqrt{2}\\notin\\mathbb{Q}"]},
+    {symbol:"\\mathbb{R}",name:"Real Numbers",category:"set",pkg:"amssymb",usedIn:["Analysis","ML","Stats"],sources:["grami","murphy","aronow","abadir","wiki"],
+      meaning:"All points on the continuous number line.",
+      explanation:"Includes all rational and irrational numbers.",
+      examples:["\\pi\\in\\mathbb{R},\\quad\\sqrt{2}\\in\\mathbb{R}"]},
+    {symbol:"\\mathbb{C}",name:"Complex Numbers",category:"set",pkg:"amssymb",usedIn:["Analysis","Signal Processing"],sources:["grami","wiki"],
+      meaning:"Numbers a+bi where a,b∈ℝ and i=√−1.",
+      explanation:"Every polynomial has a solution in ℂ (Fundamental Theorem of Algebra).",
+      examples:["3+2i\\in\\mathbb{C},\\quad i^2=-1"]},
+    {symbol:"[a,\\,b]",name:"Closed Interval",category:"set",pkg:null,usedIn:["Analysis","Calculus"],sources:["grami","abadir","wiki"],
+      meaning:"All x∈ℝ with a≤x≤b. Both endpoints included.",
+      explanation:"The closed interval contains its boundary points.",
+      examples:["[0,1]=\\{x\\in\\mathbb{R}:0\\le x\\le 1\\}"]},
+    {symbol:"(a,\\,b)",name:"Open Interval",category:"set",pkg:null,usedIn:["Analysis","Calculus"],sources:["grami","abadir","wiki"],
+      meaning:"All x∈ℝ with a strictly less than x strictly less than b. Both endpoints excluded.",
+      explanation:"The open interval excludes its boundary points.",
+      examples:["(0,1)=\\{x\\in\\mathbb{R}:0<x<1\\}"]},
+    // ── ALGEBRA / FUNCTIONS ──
+    {symbol:"f: X \\to Y",name:"Function",category:"algebra",pkg:null,usedIn:["Functions","Analysis"],sources:["grami","aronow","wiki"],
+      meaning:"A rule mapping each element of domain X to exactly one element of codomain Y.",
+      explanation:"The range is the actual set of outputs.",
+      examples:["f:\\mathbb{R}\\to\\mathbb{R},\\;f(x)=x^2"]},
+    {symbol:"g \\circ f",name:"Composition",category:"algebra",pkg:null,usedIn:["Functions","Analysis"],sources:["grami","aronow","wiki"],
+      meaning:"Apply f first, then g to the result: (g∘f)(x)=g(f(x)).",
+      explanation:"Associative but not generally commutative.",
+      examples:["f(x)=x^2,\\;g(x)=x{+}1\\Rightarrow(g\\circ f)(3)=10"]},
+    {symbol:"f^{-1}",name:"Inverse Function",category:"algebra",pkg:null,usedIn:["Functions","Analysis"],sources:["grami"],
+      meaning:"Maps each output of f back to its original input.",
+      explanation:"Exists only when f is bijective.",
+      examples:["f(x)=2x\\Rightarrow f^{-1}(x)=x/2"]},
+    {symbol:"|x|",name:"Absolute Value",category:"algebra",pkg:null,usedIn:["Analysis","Linear Algebra"],sources:["grami","murphy","aronow","wiki"],
+      meaning:"Non-negative magnitude of x. Distance from x to 0.",
+      explanation:"|x|=x if x is at least 0; |x|=−x if x is negative.",
+      examples:["|-5|=5,\\;|3|=3,\\;|0|=0"]},
+    {symbol:"\\lfloor x \\rfloor",name:"Floor Function",category:"algebra",pkg:null,usedIn:["Number Theory","CS"],sources:["grami","murphy","holz"],
+      meaning:"Greatest integer less than or equal to x. Rounds toward −∞.",
+      explanation:"Truncates the decimal part toward negative infinity.",
+      examples:["\\lfloor 3.7\\rfloor=3,\\quad\\lfloor -2.3\\rfloor=-3"]},
+    {symbol:"\\lceil x \\rceil",name:"Ceiling Function",category:"algebra",pkg:null,usedIn:["Number Theory","CS"],sources:["grami","murphy","holz"],
+      meaning:"Smallest integer greater than or equal to x. Rounds toward +∞.",
+      explanation:"Rounds toward positive infinity.",
+      examples:["\\lceil 3.2\\rceil=4,\\quad\\lceil -2.7\\rceil=-2"]},
+    {symbol:"n!",name:"Factorial",category:"algebra",pkg:null,usedIn:["Combinatorics","Probability"],sources:["grami","murphy","wiki"],
+      meaning:"Product of all positive integers from 1 to n. Convention: 0!=1.",
+      explanation:"n!=n*(n−1)*…*1. Grows extremely fast.",
+      examples:["5!=120,\\quad 0!=1,\\quad 3!=6"]},
+    {symbol:"\\binom{n}{r}",name:"Binomial Coefficient",category:"algebra",pkg:"amsmath",usedIn:["Combinatorics","Probability"],sources:["grami","murphy","holz","wiki"],
+      meaning:"n choose r — ways to select r items from n without regard to order.",
+      explanation:"=n!/(r!(n-r)!). Appears in Pascal's triangle and the binomial theorem.",
+      examples:["\\binom{5}{2}=\\frac{5!}{2!\\,3!}=10"]},
+    {symbol:"\\log_a x",name:"Logarithm",category:"algebra",pkg:null,usedIn:["Analysis","Information Theory","ML"],sources:["grami","murphy","wiki"],
+      meaning:"Exponent to which base a must be raised to produce x.",
+      explanation:"log_a x=y means a^y=x. Natural log ln uses base e≈2.718.",
+      examples:["\\log_2 8=3,\\;\\ln e=1,\\;\\log_{10}100=2"]},
+    {symbol:"e^x",name:"Exponential",category:"algebra",pkg:null,usedIn:["Analysis","Probability","ML"],sources:["grami","murphy","wiki"],
+      meaning:"Euler's number e (≈2.71828) raised to power x. Also written exp(x).",
+      explanation:"Unique function equal to its own derivative.",
+      examples:["e^0=1,\\;e^{i\\pi}=-1\\;(\\text{Euler})"]},
+    {symbol:"a \\mid b",name:"Divides",category:"algebra",pkg:null,usedIn:["Number Theory","Crypto"],sources:["grami","wiki"],
+      meaning:"a divides b — there exists an integer k such that b=a×k.",
+      explanation:"Written a∤b when a does not divide b.",
+      examples:["3\\mid 12\\;(12=3\\times4)","5\\nmid 13"]},
+    {symbol:"a\\equiv b\\pmod{m}",name:"Congruence",category:"algebra",pkg:null,usedIn:["Number Theory","Crypto"],sources:["grami","wiki"],
+      meaning:"a and b have the same remainder when divided by m.",
+      explanation:"Equivalently, m divides (a−b). Defines equivalence classes on ℤ.",
+      examples:["17\\equiv 5\\pmod{12}","38\\equiv 2\\pmod{4}"]},
+    {symbol:"\\gcd(a,b)",name:"GCD",category:"algebra",pkg:null,usedIn:["Number Theory","Crypto"],sources:["grami"],
+      meaning:"Greatest common divisor of a and b.",
+      explanation:"Computed via the Euclidean algorithm. gcd(a,b)=1 means coprime.",
+      examples:["\\gcd(12,8)=4,\\;\\gcd(15,7)=1"]},
+    {symbol:"\\text{lcm}(a,b)",name:"LCM",category:"algebra",pkg:"amsmath",usedIn:["Number Theory"],sources:["grami"],
+      meaning:"Least common multiple of a and b.",
+      explanation:"lcm(a,b)=|a*b|/gcd(a,b).",
+      examples:["\\text{lcm}(4,6)=12"]},
+    {symbol:"\\vec{v}",name:"Vector Notation",category:"algebra",pkg:null,usedIn:["Linear Algebra","Physics"],sources:["wiki"],
+      meaning:"An arrow accent denoting a vector quantity.",
+      explanation:"Alternative to bold notation. Common in physics and elementary linear algebra.",
+      examples:["\\vec{F}=m\\vec{a}","\\|\\vec{v}\\|=\\sqrt{v_x^2+v_y^2}"]},
+    {symbol:"\\mathbf{v}",name:"Bold Vector",category:"algebra",pkg:null,usedIn:["Linear Algebra","ML"],sources:["murphy","holz","abadir"],
+      meaning:"Bold lowercase letter denoting a column vector.",
+      explanation:"Standard ML/statistics convention. Matrices use bold uppercase.",
+      examples:["\\mathbf{x}=[x_1,\\ldots,x_D]^\\top","\\mathbf{w}^\\top\\mathbf{x}=\\text{dot product}"]},
+    {symbol:"a \\cdot b",name:"Dot Product",category:"algebra",pkg:null,usedIn:["Linear Algebra","Physics"],sources:["wiki"],
+      meaning:"Product of two quantities, or the dot (scalar) product of two vectors.",
+      explanation:"In linear algebra: a·b = Σ aᵢbᵢ. In arithmetic: just multiplication.",
+      examples:["[1,2]\\cdot[3,4]=1\\cdot3+2\\cdot4=11"]},
+    {symbol:"\\mathbf{u} \\times \\mathbf{v}",name:"Cross Product",category:"algebra",pkg:null,usedIn:["Linear Algebra","Physics"],sources:["wiki"],
+      meaning:"The cross product of two 3D vectors — produces a vector perpendicular to both.",
+      explanation:"Only defined in 3D (and 7D). |u×v|=|u||v|sin(θ).",
+      examples:["\\hat{i}\\times\\hat{j}=\\hat{k}","\\mathbf{u}\\times\\mathbf{v}=-\\mathbf{v}\\times\\mathbf{u}"]},
+    // ── GENERAL ──
+    {symbol:"\\approx",name:"Approximately Equal",category:"misc",pkg:null,usedIn:["Analysis","Numerics"],sources:["murphy","holz","wiki"],
+      meaning:"Two quantities are approximately or nearly equal.",
+      explanation:"Used in numerical approximations and asymptotic analysis.",
+      examples:["\\pi\\approx 3.14159,\\quad e\\approx 2.71828"]},
+    {symbol:"\\propto",name:"Proportional To",category:"misc",pkg:null,usedIn:["Physics","ML","Stats"],sources:["murphy","holz","wiki"],
+      meaning:"y∝x means y=ax for some nonzero constant a.",
+      explanation:"Indicates a constant ratio. The constant itself is unspecified.",
+      examples:["F\\propto a\\;(F=ma)","p(x|y)\\propto p(y|x)\\,p(x)"]},
+    {symbol:":=",name:"Defined As",category:"misc",pkg:null,usedIn:["All fields"],sources:["murphy","abadir","wiki"],
+      meaning:"The left side is defined in terms of the right side.",
+      explanation:"Unambiguously introduces new notation.",
+      examples:["a:=b+c","\\theta^*:=\\arg\\min_\\theta L(\\theta)"]},
+    {symbol:"\\mathcal{O}(g)",name:"Big-O Notation",category:"misc",pkg:null,usedIn:["CS","Algorithms"],sources:["grami","murphy","holz","wiki"],
+      meaning:"f(n) grows no faster than g(n) up to a constant factor — an upper bound.",
+      explanation:"f=O(g) means there exist C,n₀ such that |f(n)| is at most C|g(n)| for all n>n₀.",
+      examples:["n^2+3n=\\mathcal{O}(n^2)","\\text{Bubble sort: }\\mathcal{O}(n^2)"]},
+    {symbol:"\\Omega(g)",name:"Big-Omega Notation",category:"misc",pkg:null,usedIn:["CS","Algorithms"],sources:["grami"],
+      meaning:"f(n) grows at least as fast as g(n) — a lower bound.",
+      explanation:"f=Ω(g) iff g=O(f).",
+      examples:["\\text{Any comparison sort: }\\Omega(n\\log n)"]},
+    {symbol:"\\Theta(g)",name:"Big-Theta Notation",category:"misc",pkg:null,usedIn:["CS","Algorithms"],sources:["grami"],
+      meaning:"Tight asymptotic bound — f grows at exactly the same rate as g.",
+      explanation:"f=Θ(g) means f=O(g) and f=Ω(g).",
+      examples:["n^2+n=\\Theta(n^2)","\\text{Merge sort: }\\Theta(n\\log n)"]},
+    {symbol:"\\sum_{i=k}^{m}",name:"Summation",category:"misc",pkg:null,usedIn:["All fields"],sources:["grami","aronow","wiki"],
+      meaning:"Sum of terms a_k, a_{k+1}, …, a_m.",
+      explanation:"The index i runs from k to m inclusive.",
+      examples:["\\sum_{i=1}^{5}i^2=55","\\sum_{i=1}^{n}i=\\frac{n(n+1)}{2}"]},
+    {symbol:"\\prod_{j=k}^{m}",name:"Product Notation",category:"misc",pkg:null,usedIn:["All fields"],sources:["grami","aronow"],
+      meaning:"Product of terms a_k, a_{k+1}, …, a_m.",
+      explanation:"Multiplicative counterpart to summation.",
+      examples:["\\prod_{i=1}^{5}i=5!=120"]},
+    {symbol:"\\arg\\max f",name:"Argmax",category:"misc",pkg:null,usedIn:["Optimization","ML"],sources:["murphy","holz","aronow"],
+      meaning:"The value of the input that maximises f.",
+      explanation:"Returns the input, not the maximum value itself.",
+      examples:["\\arg\\max_{x}(-x^2-2x+3)=-1"]},
+    {symbol:"\\arg\\min f",name:"Argmin",category:"misc",pkg:null,usedIn:["Optimization","ML"],sources:["murphy","holz","aronow"],
+      meaning:"The value of the input that minimises f.",
+      explanation:"Used in ML loss minimisation.",
+      examples:["\\theta^*=\\arg\\min_\\theta\\mathcal{L}(\\theta)"]},
+    {symbol:"\\infty",name:"Infinity",category:"misc",pkg:null,usedIn:["Analysis","Limits"],sources:["murphy","holz","wiki"],
+      meaning:"An unboundedly large quantity. Not a real number.",
+      explanation:"Used as a limit or bound in integrals and series.",
+      examples:["\\lim_{n\\to\\infty}\\frac{1}{n}=0","\\int_{-\\infty}^{\\infty}e^{-x^2}dx=\\sqrt{\\pi}"]},
+    {symbol:"\\mathbf{1}(x)",name:"Indicator Function",category:"misc",pkg:null,usedIn:["Probability","ML"],sources:["murphy","holz"],
+      meaning:"Equals 1 if condition x is true, 0 otherwise.",
+      explanation:"Also written I(x) or 𝟙[x].",
+      examples:["\\mathbf{1}(x>0)=1\\text{ if }x>0,\\text{ else }0"]},
+    {symbol:"\\delta(x)",name:"Dirac Delta",category:"misc",pkg:null,usedIn:["Physics","Signal Processing"],sources:["murphy","holz"],
+      meaning:"Infinite at x=0, zero elsewhere, with total integral 1.",
+      explanation:"A distribution, not a classical function. Models point masses.",
+      examples:["\\int f(x)\\,\\delta(x-a)\\,dx=f(a)"]},
+    {symbol:"\\Gamma(x)",name:"Gamma Function",category:"misc",pkg:null,usedIn:["Probability","Analysis"],sources:["murphy","holz","wiki"],
+      meaning:"Generalisation of the factorial to real and complex numbers.",
+      explanation:"Γ(n)=(n−1)! for positive integers.",
+      examples:["\\Gamma(n)=(n-1)!,\\quad\\Gamma(\\tfrac{1}{2})=\\sqrt{\\pi}"]},
+    {symbol:"\\lim_{x\\to a}f(x)",name:"Limit",category:"calculus",pkg:null,usedIn:["Calculus","Analysis"],sources:["wiki"],
+      meaning:"The value that f(x) approaches as x approaches a.",
+      explanation:"Foundation of calculus. Can be left (x→a⁻) or right (x→a⁺) limit.",
+      examples:["\\lim_{x\\to 0}\\frac{\\sin x}{x}=1","\\lim_{x\\to\\infty}\\left(1+\\frac{1}{x}\\right)^x=e"]},
+    {symbol:"f'(x)",name:"Derivative",category:"calculus",pkg:null,usedIn:["Calculus","Physics"],sources:["wiki"],
+      meaning:"The instantaneous rate of change of f with respect to x.",
+      explanation:"f'(x)=lim_{h→0}(f(x+h)−f(x))/h. Also written df/dx or Df.",
+      examples:["f(x)=x^2\\Rightarrow f'(x)=2x","(\\sin x)'=\\cos x"]},
+    // ── LINEAR ALGEBRA ──
+    {symbol:"A^{\\top}",name:"Matrix Transpose",category:"linalg",pkg:null,usedIn:["Linear Algebra","ML","Stats"],sources:["grami","murphy","aronow","abadir","wiki"],
+      meaning:"Rows and columns of A are swapped. Element (i,j) of A^T equals (j,i) of A.",
+      explanation:"If A is m×n then A^T is n×m.",
+      examples:["(AB)^\\top=B^\\top A^\\top","(A^\\top)^\\top=A"]},
+    {symbol:"A^{-1}",name:"Matrix Inverse",category:"linalg",pkg:null,usedIn:["Linear Algebra","Stats"],sources:["grami","murphy","abadir","wiki"],
+      meaning:"Matrix satisfying A·A⁻¹=A⁻¹·A=I.",
+      explanation:"Exists only for square non-singular matrices (det≠0).",
+      examples:["Ax=b\\Rightarrow x=A^{-1}b","\\det(A^{-1})=1/\\det(A)"]},
+    {symbol:"A^\\dagger",name:"Pseudo-Inverse",category:"linalg",pkg:null,usedIn:["Linear Algebra","ML"],sources:["murphy","holz","abadir"],
+      meaning:"Moore-Penrose generalisation of the inverse for any matrix.",
+      explanation:"Minimises ||Ax−b|| in least-squares problems.",
+      examples:["\\hat{x}=A^\\dagger b\\;(\\text{least squares})"]},
+    {symbol:"\\operatorname{tr}(A)",name:"Trace",category:"linalg",pkg:"amsmath",usedIn:["Linear Algebra","ML"],sources:["murphy","holz","abadir"],
+      meaning:"Sum of the diagonal elements of a square matrix.",
+      explanation:"tr(A)=sum of eigenvalues. tr(AB)=tr(BA).",
+      examples:["\\operatorname{tr}\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}=5"]},
+    {symbol:"\\det(A)",name:"Determinant",category:"linalg",pkg:null,usedIn:["Linear Algebra","Geometry"],sources:["murphy","holz","abadir","wiki"],
+      meaning:"Scalar encoding the scaling factor and orientation of transformation A.",
+      explanation:"det(A)=0 iff A is singular.",
+      examples:["\\det\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}=ad-bc"]},
+    {symbol:"\\|\\mathbf{v}\\|_2",name:"Euclidean Norm (ℓ₂)",category:"linalg",pkg:null,usedIn:["Linear Algebra","ML","Geometry"],sources:["murphy","holz","abadir"],
+      meaning:"Straight-line length of vector v.",
+      explanation:"||v||₂=√(v₁²+…+vₙ²).",
+      examples:["\\mathbf{v}=[3,4]\\Rightarrow\\|\\mathbf{v}\\|_2=5"]},
+    {symbol:"\\|\\mathbf{v}\\|_1",name:"ℓ₁ Norm (Manhattan)",category:"linalg",pkg:null,usedIn:["Linear Algebra","ML"],sources:["murphy","holz"],
+      meaning:"Sum of absolute values of components.",
+      explanation:"Promotes sparsity in LASSO regularisation.",
+      examples:["[3,-4]\\Rightarrow\\|\\mathbf{v}\\|_1=7"]},
+    {symbol:"\\mathbf{u}^\\top\\mathbf{v}",name:"Inner Product",category:"linalg",pkg:null,usedIn:["Linear Algebra","ML"],sources:["murphy","holz","wiki"],
+      meaning:"Scalar dot product: sum of element-wise products.",
+      explanation:"Zero means the vectors are orthogonal.",
+      examples:["[1,2]^\\top[3,4]=1\\cdot3+2\\cdot4=11"]},
+    {symbol:"\\mathbf{u}\\odot\\mathbf{v}",name:"Hadamard Product",category:"linalg",pkg:"amssymb",usedIn:["Linear Algebra","ML"],sources:["murphy","holz","abadir"],
+      meaning:"Elementwise multiplication of two same-shaped arrays.",
+      explanation:"Also called the Schur product.",
+      examples:["[1,2,3]\\odot[4,5,6]=[4,10,18]"]},
+    {symbol:"A\\otimes B",name:"Kronecker Product",category:"linalg",pkg:null,usedIn:["Linear Algebra","Signal Processing"],sources:["murphy","holz","abadir"],
+      meaning:"Block matrix: each element of A multiplied by the entire matrix B.",
+      explanation:"If A is m×n and B is p×q then A⊗B is mp×nq.",
+      examples:["\\mathbf{I}_2\\otimes A\\text{ gives a block-diagonal}"]},
+    {symbol:"\\mathbf{I}_n",name:"Identity Matrix",category:"linalg",pkg:null,usedIn:["Linear Algebra","ML"],sources:["grami","murphy","holz","abadir"],
+      meaning:"n×n matrix with 1s on the diagonal and 0s elsewhere.",
+      explanation:"Multiplicative identity: AI=IA=A.",
+      examples:["\\mathbf{I}_2=\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}"]},
+    {symbol:"\\lambda_i(A)",name:"Eigenvalue",category:"linalg",pkg:null,usedIn:["Linear Algebra","ML","Physics"],sources:["abadir","wiki"],
+      meaning:"Scalar λ satisfying Av=λv for some non-zero vector v.",
+      explanation:"Eigenvalues encode how a matrix stretches or flips space along each eigenvector direction.",
+      examples:["\\det(A-\\lambda I)=0\\text{ (characteristic equation)}","\\operatorname{tr}(A)=\\sum_i\\lambda_i"]},
+    {symbol:"\\mathbf{x}\\perp\\mathbf{y}",name:"Orthogonality",category:"linalg",pkg:null,usedIn:["Linear Algebra","Geometry"],sources:["abadir","wiki"],
+      meaning:"Vectors x and y are orthogonal — their inner product is zero.",
+      explanation:"Generalization of perpendicularity. Orthogonal vectors carry independent information.",
+      examples:["\\mathbf{x}^\\top\\mathbf{y}=0\\Leftrightarrow\\mathbf{x}\\perp\\mathbf{y}"]},
+    // ── CALCULUS ──
+    {symbol:"\\nabla f",name:"Gradient",category:"calculus",pkg:null,usedIn:["Calculus","ML","Optimization"],sources:["murphy","holz","abadir"],
+      meaning:"Vector of all partial derivatives of scalar f.",
+      explanation:"Points in the direction of steepest ascent. Used in gradient descent.",
+      examples:["f=x^2+y^2\\Rightarrow\\nabla f=[2x,\\,2y]"]},
+    {symbol:"\\nabla^2 f",name:"Hessian / Laplacian",category:"calculus",pkg:null,usedIn:["Calculus","Optimization","ML"],sources:["murphy","holz","abadir"],
+      meaning:"Matrix of second-order partial derivatives; or sum of second partials (Laplacian).",
+      explanation:"Positive-definite Hessian at a point indicates a local minimum.",
+      examples:["H_{ij}=\\frac{\\partial^2 f}{\\partial\\theta_i\\partial\\theta_j}"]},
+    {symbol:"\\frac{\\partial f}{\\partial x}",name:"Partial Derivative",category:"calculus",pkg:null,usedIn:["Calculus","Physics","ML"],sources:["murphy","holz","abadir","wiki"],
+      meaning:"Rate of change of f w.r.t. x, all other variables held constant.",
+      explanation:"Extends differentiation to multivariate functions.",
+      examples:["f=x^2y\\Rightarrow\\frac{\\partial f}{\\partial x}=2xy"]},
+    {symbol:"\\int_a^b f\\,dx",name:"Definite Integral",category:"calculus",pkg:null,usedIn:["Calculus","Probability","Physics"],sources:["murphy","holz","wiki"],
+      meaning:"Net signed area under f between x=a and x=b.",
+      explanation:"Indefinite form ∫f(x)dx gives all antiderivatives (+C).",
+      examples:["\\int_0^1 x\\,dx=\\tfrac{1}{2}","\\int x^n\\,dx=\\tfrac{x^{n+1}}{n+1}+C"]},
+    // ── PROBABILITY ──
+    {symbol:"P(A)",name:"Probability",category:"probability",pkg:null,usedIn:["Probability","Statistics"],sources:["grami","stats","aronow","wiki"],
+      meaning:"The probability that event A occurs. A value in [0,1].",
+      explanation:"P(A)=0: impossible. P(A)=1: certain.",
+      examples:["P(\\text{heads})=0.5,\\;P(\\text{die}=6)=\\tfrac{1}{6}"]},
+    {symbol:"P(A\\mid B)",name:"Conditional Probability",category:"probability",pkg:null,usedIn:["Probability","ML","Bayes"],sources:["grami","stats","aronow","wiki"],
+      meaning:"Probability of A given that B has already occurred.",
+      explanation:"P(A|B)=P(A∩B)/P(B). Updates beliefs given new information.",
+      examples:["P(A\\mid B)=\\frac{P(A\\cap B)}{P(B)}"]},
+    {symbol:"X\\sim p",name:"Distributed As",category:"probability",pkg:null,usedIn:["Probability","ML","Stats"],sources:["murphy","holz","abadir","wiki"],
+      meaning:"Random variable X follows distribution p.",
+      explanation:"The tilde ~ declares the probability distribution.",
+      examples:["X\\sim\\mathcal{N}(0,1)","X\\sim\\text{Bernoulli}(0.5)"]},
+    {symbol:"X\\perp Y\\mid Z",name:"Conditional Independence",category:"probability",pkg:null,usedIn:["Probability","Graphical Models"],sources:["murphy","holz"],
+      meaning:"X is conditionally independent of Y given Z.",
+      explanation:"Once Z is known, Y provides no additional information about X.",
+      examples:["\\text{Temp}\\perp\\text{Humidity}\\mid\\text{Season}"]},
+    {symbol:"\\mathbb{E}[X]",name:"Expected Value",category:"probability",pkg:"amssymb",usedIn:["Probability","Stats","ML"],sources:["murphy","holz","stats","aronow"],
+      meaning:"The long-run average value of random variable X.",
+      explanation:"E[X]=sum of x*P(X=x) (discrete) or integral of x*f(x)dx (continuous).",
+      examples:["\\mathbb{E}[\\text{fair die}]=3.5","\\mathbb{E}[aX+b]=a\\mathbb{E}[X]+b"]},
+    {symbol:"\\mathrm{Var}(X)",name:"Variance",category:"probability",pkg:"amsmath",usedIn:["Probability","Stats"],sources:["murphy","holz","stats","aronow"],
+      meaning:"Expected squared deviation from the mean.",
+      explanation:"Var(X)=E[(X−E[X])^2]=E[X^2]−(E[X])^2.",
+      examples:["\\mathrm{Var}(aX)=a^2\\mathrm{Var}(X)","\\mathrm{Var}(c)=0"]},
+    {symbol:"\\mathcal{N}(\\mu,\\sigma^2)",name:"Normal Distribution",category:"probability",pkg:"amsmath",usedIn:["Probability","Stats","ML"],sources:["murphy","holz","abadir","stats"],
+      meaning:"Gaussian (bell-curve) distribution with mean μ and variance σ².",
+      explanation:"Most important distribution in statistics. Arises as the CLT limit.",
+      examples:["\\mathcal{N}(0,1)\\text{ is the standard normal}","f(x)=\\frac{1}{\\sigma\\sqrt{2\\pi}}e^{-(x-\\mu)^2/2\\sigma^2}"]},
+    {symbol:"F(x)",name:"CDF",category:"probability",pkg:null,usedIn:["Probability","Stats"],sources:["murphy","holz","stats","aronow"],
+      meaning:"Cumulative Distribution Function — P(X is at most x).",
+      explanation:"Non-decreasing from 0 to 1. Completely characterises the distribution.",
+      examples:["F(-\\infty)=0,\\quad F(+\\infty)=1"]},
+    {symbol:"f(x)",name:"PDF",category:"probability",pkg:null,usedIn:["Probability","Stats"],sources:["murphy","holz","stats","aronow"],
+      meaning:"Probability Density Function — relative likelihood for continuous X.",
+      explanation:"P(a is at most X is at most b) = integral from a to b of f(x)dx.",
+      examples:["\\int_{-\\infty}^{\\infty}f(x)\\,dx=1"]},
+    {symbol:"p(x)",name:"PMF",category:"probability",pkg:null,usedIn:["Probability","Stats"],sources:["murphy","holz","stats"],
+      meaning:"Probability Mass Function — P(X=x) for discrete X.",
+      explanation:"All values sum to 1.",
+      examples:["\\text{Fair die: }p(k)=\\tfrac{1}{6},\\;k\\in\\{1,\\ldots,6\\}"]},
+    {symbol:"H(X)",name:"Entropy",category:"probability",pkg:null,usedIn:["Information Theory","ML"],sources:["murphy","holz"],
+      meaning:"Measure of uncertainty or randomness in random variable X.",
+      explanation:"H(X)=−sum of p(x)*log p(x). Maximum for the uniform distribution.",
+      examples:["H(\\text{fair coin})=1\\text{ bit}"]},
+    {symbol:"D_{\\mathrm{KL}}(p\\|q)",name:"KL Divergence",category:"probability",pkg:"amsmath",usedIn:["Information Theory","ML","Bayes"],sources:["murphy","holz","aronow"],
+      meaning:"How much distribution p differs from reference distribution q.",
+      explanation:"Not symmetric. D_KL is at least 0 with equality iff p=q.",
+      examples:["D_{\\mathrm{KL}}(p\\|p)=0\\text{ always}"]},
+    {symbol:"\\sigma(x)",name:"Sigmoid Function",category:"probability",pkg:null,usedIn:["ML","Neural Networks"],sources:["murphy","holz"],
+      meaning:"Logistic function mapping all real numbers to (0,1).",
+      explanation:"σ(x)=1/(1+e^(−x)). Used in logistic regression and neural networks.",
+      examples:["\\sigma(0)=0.5,\\;\\sigma(\\pm\\infty)\\to\\{1,0\\}"]},
+    // ── STATISTICS ──
+    {symbol:"\\bar{x}",name:"Sample Mean",category:"statistics",pkg:null,usedIn:["Stats","Econometrics"],sources:["stats","aronow","abadir"],
+      meaning:"Arithmetic average of a sample of observations.",
+      explanation:"Estimates the population mean μ.",
+      examples:["\\bar{x}=\\frac{1}{n}\\sum_{i=1}^n x_i"]},
+    {symbol:"\\mu",name:"Population Mean",category:"statistics",pkg:null,usedIn:["Stats","Probability"],sources:["stats","aronow","abadir"],
+      meaning:"True average of the entire population. Usually unknown.",
+      explanation:"Equals E[X] for a random variable X.",
+      examples:["\\mu=\\mathbb{E}[X],\\quad\\mu=0\\text{ for }\\mathcal{N}(0,1)"]},
+    {symbol:"s^2",name:"Sample Variance",category:"statistics",pkg:null,usedIn:["Stats","Econometrics"],sources:["stats","aronow","abadir"],
+      meaning:"Average squared deviation from the sample mean.",
+      explanation:"Division by n−1 (not n) makes it an unbiased estimator.",
+      examples:["s^2=\\frac{1}{n-1}\\sum_{i=1}^n(x_i-\\bar{x})^2"]},
+    {symbol:"\\hat{\\theta}",name:"Estimator",category:"statistics",pkg:null,usedIn:["Stats","ML","Econometrics"],sources:["murphy","holz","abadir"],
+      meaning:"An estimate of parameter θ computed from data.",
+      explanation:"The hat denotes an estimated quantity.",
+      examples:["\\hat{\\mu}=\\bar{x},\\;\\hat{\\theta}_{\\mathrm{MLE}}=\\arg\\max_\\theta\\ell(\\theta)"]},
+    {symbol:"H_0",name:"Null Hypothesis",category:"statistics",pkg:null,usedIn:["Stats","Econometrics"],sources:["stats","abadir"],
+      meaning:"The default hypothesis assumed true until evidence refutes it.",
+      explanation:"Rejected when the p-value falls below significance level α.",
+      examples:["H_0:\\mu=0\\text{ (no effect)}","H_0:p=0.5\\text{ (fair coin)}"]},
+    {symbol:"\\alpha",name:"Significance Level",category:"statistics",pkg:null,usedIn:["Stats","Hypothesis Testing"],sources:["stats","abadir"],
+      meaning:"Threshold probability for rejecting H₀ (Type I error rate).",
+      explanation:"Common choices: α=0.05 or 0.01.",
+      examples:["\\alpha=0.05\\Rightarrow 5\\%\\text{ false-positive risk}"]},
+    {symbol:"\\chi^2(k)",name:"Chi-Squared",category:"statistics",pkg:null,usedIn:["Stats","Hypothesis Testing"],sources:["stats","abadir"],
+      meaning:"Distribution of a sum of k squared standard normal variables.",
+      explanation:"Used for categorical data tests and goodness-of-fit.",
+      examples:["\\chi^2(k)\\text{ has mean }k\\text{ and variance }2k"]},
+    {symbol:"r",name:"Correlation Coefficient",category:"statistics",pkg:null,usedIn:["Stats","Econometrics"],sources:["stats","abadir"],
+      meaning:"Measures linear relationship between two variables. Range [−1,1].",
+      explanation:"r=Cov(X,Y)/(σ_X σ_Y). r=±1: perfect linear; r=0: no linear association.",
+      examples:["r=\\frac{\\mathrm{Cov}(X,Y)}{\\sigma_X\\sigma_Y}"]},
+    {symbol:"R^2",name:"R-Squared",category:"statistics",pkg:null,usedIn:["Stats","Econometrics","ML"],sources:["stats","abadir"],
+      meaning:"Proportion of variance in Y explained by the model.",
+      explanation:"R² in [0,1]. R²=1: perfect fit. R²=0: no explanatory power.",
+      examples:["R^2=1-\\frac{SS_{\\text{res}}}{SS_{\\text{tot}}}"]},
+  ];
+
+  /* ══════════════════════════════════════════
+     GREEK ALPHABET
+  ══════════════════════════════════════════ */
+  const GREEK=[
+    {uc:'α',lc:'',name:'Alpha',  latex:'\\alpha',  uses:'Significance level α, learning rate, angles'},
+    {uc:'β',lc:'',name:'Beta',   latex:'\\beta',   uses:'Regression coefficients, Type II error rate'},
+    {uc:'γ',lc:'Γ',name:'Gamma', latex:'\\gamma / \\Gamma', uses:'Gamma function Γ(x), graph edges, Euler-Mascheroni constant γ'},
+    {uc:'δ',lc:'Δ',name:'Delta', latex:'\\delta / \\Delta', uses:'Small increment δ, change Δ, Dirac delta δ(x), Kronecker delta δᵢⱼ'},
+    {uc:'ε',lc:'',name:'Epsilon',latex:'\\epsilon / \\varepsilon', uses:'Arbitrarily small number ε, error term in regression'},
+    {uc:'ζ',lc:'',name:'Zeta',   latex:'\\zeta',   uses:'Riemann zeta function ζ(s)'},
+    {uc:'η',lc:'',name:'Eta',    latex:'\\eta',    uses:'Learning rate / step size in gradient descent'},
+    {uc:'θ',lc:'Θ',name:'Theta', latex:'\\theta / \\Theta', uses:'Model parameters θ, angles, Big-Theta Θ(·)'},
+    {uc:'ι',lc:'',name:'Iota',   latex:'\\iota',   uses:'Seldom used; occasionally an index'},
+    {uc:'κ',lc:'',name:'Kappa',  latex:'\\kappa',  uses:'Condition number of a matrix, curvature κ'},
+    {uc:'λ',lc:'Λ',name:'Lambda',latex:'\\lambda / \\Lambda', uses:'Eigenvalues λ, regularisation strength, Poisson rate, diagonal matrix Λ'},
+    {uc:'μ',lc:'',name:'Mu',     latex:'\\mu',     uses:'Population mean, magnetic permeability'},
+    {uc:'ν',lc:'',name:'Nu',     latex:'\\nu',     uses:'Degrees of freedom, frequency'},
+    {uc:'ξ',lc:'Ξ',name:'Xi',   latex:'\\xi / \\Xi', uses:'Hyperparameters in Bayesian models'},
+    {uc:'π',lc:'Π',name:'Pi',   latex:'\\pi / \\Pi', uses:'π≈3.14159, product notation Π, probability vector'},
+    {uc:'ρ',lc:'',name:'Rho',   latex:'\\rho',    uses:'Correlation coefficient ρ, density'},
+    {uc:'σ',lc:'Σ',name:'Sigma',latex:'\\sigma / \\Sigma', uses:'Standard deviation σ, summation Σ, covariance matrix Σ, sigmoid σ(x)'},
+    {uc:'τ',lc:'',name:'Tau',   latex:'\\tau',    uses:'Time constant, precision 1/σ², golden ratio complement'},
+    {uc:'υ',lc:'',name:'Upsilon',latex:'\\upsilon', uses:'Rarely used; occasionally a variable'},
+    {uc:'φ',lc:'Φ',name:'Phi',  latex:'\\phi / \\Phi', uses:'Standard normal CDF Φ, basis functions φ(x), golden ratio φ, Euler totient φ(n)'},
+    {uc:'χ',lc:'',name:'Chi',   latex:'\\chi',    uses:'Chi-squared distribution χ²(k), characteristic functions'},
+    {uc:'ψ',lc:'Ψ',name:'Psi',  latex:'\\psi / \\Psi', uses:'Digamma function ψ(x), wave functions, variational parameters'},
+    {uc:'ω',lc:'Ω',name:'Omega',latex:'\\omega / \\Omega', uses:'Angular frequency ω, Big-Omega Ω(·), covariance matrix Ω, sample space Ω'},
+    {uc:'∇',lc:'',name:'Nabla', latex:'\\nabla',  uses:'Gradient ∇f, Laplacian ∇², del operator'},
+  ];
+
+  /* ══════════════════════════════════════════
+     NOTATION VARIANTS
+  ══════════════════════════════════════════ */
+  const VARIANTS=[
+    {group:'∼ (tilde)',rows:[
+        {symbol:'X\\sim p',  field:'Probability/Stats', meaning:'X is distributed according to p. The most common use in ML/stats.'},
+        {symbol:'f\\sim g',  field:'Asymptotic Analysis',meaning:'f and g are asymptotically equivalent: f(x)/g(x)→1 as x→∞.'},
+        {symbol:'A\\sim B',  field:'Linear Algebra',    meaning:'Matrices A and B are similar (A=P⁻¹BP for some invertible P).'},
+        {symbol:'a\\sim b',  field:'Equivalence Relations',meaning:'a and b are related by some equivalence relation ~.'},
+      ]},
+    {group:'| · | (vertical bar)',rows:[
+        {symbol:'|x|',       field:'Real Analysis',     meaning:'Absolute value of scalar x. |x|=x if x≥0, else −x.'},
+        {symbol:'|z|',       field:'Complex Analysis',  meaning:'Modulus of complex number z=a+bi: |z|=√(a²+b²).'},
+        {symbol:'|A|',       field:'Set Theory',        meaning:'Cardinality of set A — the number of elements.'},
+        {symbol:'|A|',       field:'Linear Algebra',    meaning:'Determinant of matrix A. Same as det(A).'},
+      ]},
+    {group:'∇ (nabla)',rows:[
+        {symbol:'\\nabla f', field:'Calculus/Optimization',meaning:'Gradient vector of scalar field f: [∂f/∂x₁,…,∂f/∂xₙ]ᵀ.'},
+        {symbol:'\\nabla^2 f',field:'Calculus',          meaning:'Laplacian: sum of second partial derivatives ∂²f/∂x₁²+…+∂²f/∂xₙ².'},
+        {symbol:'\\nabla^2 f',field:'Optimization/ML',   meaning:'Hessian matrix (the full matrix of second partials, not just the trace).'},
+      ]},
+    {group:'⊗ (tensor product / Kronecker)',rows:[
+        {symbol:'A\\otimes B',field:'Linear Algebra',    meaning:'Kronecker product: block matrix formed by multiplying each entry of A by B.'},
+        {symbol:'u\\otimes v',field:'Tensor Algebra',    meaning:'Outer (tensor) product of two vectors, producing a matrix.'},
+        {symbol:'V\\otimes W',field:'Abstract Algebra',  meaning:'Tensor product of two vector spaces.'},
+      ]},
+    {group:'p(·) — probability notation',rows:[
+        {symbol:'p(x)',      field:'Probability (discrete)',meaning:'Probability mass function (PMF): P(X=x).'},
+        {symbol:'p(x)',      field:'Probability (continuous)',meaning:'Probability density function (PDF): not a probability itself.'},
+        {symbol:'p(x|y)',    field:'Bayesian/ML',         meaning:'Conditional distribution of x given y.'},
+        {symbol:'p(x;\\theta)',field:'Frequentist Stats', meaning:'Distribution of x parameterised by fixed θ (not conditioning on θ).'},
+      ]},
+    {group:'E[·] — expectation',rows:[
+        {symbol:'\\mathbb{E}[X]',       field:'Probability',  meaning:'Expected value of random variable X.'},
+        {symbol:'\\mathbb{E}_p[f(X)]',  field:'ML/Information Theory',meaning:'Expected value of f(X) where X is drawn from distribution p.'},
+        {symbol:'\\mathbb{E}[X|Y]',     field:'Probability',  meaning:'Conditional expectation of X given Y — itself a random variable.'},
+      ]},
+    {group:'log — which base?',rows:[
+        {symbol:'\\log x',   field:'Pure Mathematics',   meaning:'Natural logarithm (base e). Most common convention in analysis.'},
+        {symbol:'\\log x',   field:'Information Theory',  meaning:'Logarithm base 2. Entropy measured in bits.'},
+        {symbol:'\\log x',   field:'Engineering/CS',      meaning:'Often base 10 or context-dependent. Always check.'},
+        {symbol:'\\ln x',    field:'All fields',           meaning:'Unambiguous: natural logarithm base e. Preferred when base matters.'},
+      ]},
+    {group:'d — differential vs. other uses',rows:[
+        {symbol:'dx',        field:'Calculus',             meaning:'Differential of x — infinitesimal increment. Used in integrals.'},
+        {symbol:'\\partial x',field:'Multivariable Calculus',meaning:'Partial differential — used in partial derivatives.'},
+        {symbol:'\\delta x', field:'Physics/Variation',    meaning:'Small variation or perturbation of x (not infinitesimal).'},
+        {symbol:'\\Delta x', field:'Finite Differences',   meaning:'Finite difference: Δx=x_{n+1}−x_n. A measurable change.'},
+      ]},
+    {group:'≡ (triple bar)',rows:[
+        {symbol:'a\\equiv b\\pmod{m}',field:'Number Theory',meaning:'Congruence modulo m: m divides (a−b).'},
+        {symbol:'f\\equiv g',field:'Analysis',              meaning:'Functional identity: f and g are equal everywhere on their domain.'},
+        {symbol:'p\\equiv q',field:'Logic',                 meaning:'Logical equivalence: p and q have identical truth tables.'},
+        {symbol:'a:=b',      field:'Definitions',           meaning:'a is defined to be b. Preferred unambiguous form.'},
+      ]},
+  ];
+
+  /* ══════════════════════════════════════════
+     ABBREVIATIONS
+  ══════════════════════════════════════════ */
+  const ABBRS=[
+    {term:'CDF',  def:'Cumulative Distribution Function'},
+    {term:'PDF',  def:'Probability Density Function'},
+    {term:'PMF',  def:'Probability Mass Function'},
+    {term:'CLT',  def:'Central Limit Theorem'},
+    {term:'LLN',  def:'Law of Large Numbers'},
+    {term:'i.i.d.',def:'Independent and Identically Distributed'},
+    {term:'iff',  def:'If and only if'},
+    {term:'w.r.t.',def:'With respect to'},
+    {term:'s.t.', def:'Such that'},
+    {term:'r.v.', def:'Random variable'},
+    {term:'s.d.', def:'Standard deviation'},
+    {term:'s.e.', def:'Standard error'},
+    {term:'MSE',  def:'Mean Squared Error'},
+    {term:'RSS',  def:'Residual Sum of Squares'},
+    {term:'ATE',  def:'Average Treatment Effect'},
+    {term:'OLS',  def:'Ordinary Least Squares'},
+    {term:'GLS',  def:'Generalized Least Squares'},
+    {term:'MLE',  def:'Maximum Likelihood Estimate'},
+    {term:'MAP',  def:'Maximum A Posteriori estimate'},
+    {term:'QED',  def:'Quod Erat Demonstrandum (proof complete)'},
+    {term:'ML',   def:'Machine Learning'},
+    {term:'DNN',  def:'Deep Neural Network'},
+    {term:'CNN',  def:'Convolutional Neural Network'},
+    {term:'RNN',  def:'Recurrent Neural Network'},
+    {term:'LSTM', def:'Long Short-Term Memory'},
+    {term:'SGD',  def:'Stochastic Gradient Descent'},
+    {term:'DAG',  def:'Directed Acyclic Graph'},
+    {term:'LVM',  def:'Latent Variable Model'},
+    {term:'GMM',  def:'Gaussian Mixture Model'},
+    {term:'HMM',  def:'Hidden Markov Model'},
+    {term:'KDE',  def:'Kernel Density Estimation'},
+    {term:'KL',   def:'Kullback-Leibler divergence'},
+    {term:'ELBO', def:'Evidence Lower Bound (variational inference)'},
+    {term:'EM',   def:'Expectation-Maximization algorithm'},
+    {term:'PGM',  def:'Probabilistic Graphical Model'},
+    {term:'MLP',  def:'Multilayer Perceptron'},
+    {term:'SVM',  def:'Support Vector Machine'},
+    {term:'2SLS', def:'Two-Stage Least Squares'},
+    {term:'3SLS', def:'Three-Stage Least Squares'},
+    {term:'AIC',  def:'Akaike Information Criterion'},
+    {term:'BIC',  def:'Bayesian Information Criterion'},
+    {term:'IV',   def:'Instrumental Variable'},
+    {term:'DGP',  def:'Data-Generating Process'},
+    {term:'VAR',  def:'Vector Autoregression'},
+    {term:'ARCH', def:'Autoregressive Conditional Heteroskedasticity'},
+    {term:'d.f.', def:'Degrees of freedom'},
+    {term:'a.s.', def:'Almost surely'},
+    {term:'LHS',  def:'Left-Hand Side (of an equation)'},
+    {term:'RHS',  def:'Right-Hand Side (of an equation)'},
+    {term:'WLOG', def:'Without Loss of Generality'},
+    {term:'RHS',  def:'Right-Hand Side'},
+    {term:'NLL',  def:'Negative Log-Likelihood'},
+    {term:'PSD',  def:'Positive Semi-Definite (matrix)'},
+    {term:'SVD',  def:'Singular Value Decomposition'},
+    {term:'PCA',  def:'Principal Component Analysis'},
+    {term:'LLN',  def:'Law of Large Numbers'},
+  ];
+
+  /* ══════════════════════════════════════════
+     HELPERS
+  ══════════════════════════════════════════ */
+  function rk(latex){
+    try{return katex.renderToString(latex,{throwOnError:false});}
+    catch(e){return`<code>${latex}</code>`;}
+  }
+  function esc(str){
+    return(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function sizeClass(latex){
+    const len=latex.replace(/\\[a-zA-Z]+/g,'X').replace(/[{}\s]/g,'').length;
+    if(len>16)return'sz-xs';
+    if(len>10)return'sz-sm';
+    if(len>5) return'sz-md';
+    return'sz-base';
+  }
+  function tagClass(cat){
+    return{logic:'tag-logic',set:'tag-set',algebra:'tag-algebra',calculus:'tag-calculus',
+      probability:'tag-probability',linalg:'tag-linalg',statistics:'tag-statistics',misc:'tag-misc'}[cat]||'tag-misc';
+  }
+  function catLabel(cat){
+    return{logic:'Logic',set:'Sets',algebra:'Algebra',calculus:'Calculus',
+      probability:'Probability',linalg:'Linear Algebra',statistics:'Statistics',misc:'General'}[cat]||cat;
+  }
+
+  /* unicode fallbacks */
+  const UNI={'\\equiv':'≡','\\lnot':'¬','\\land':'∧','\\lor':'∨','\\oplus':'⊕','\\to':'→',
+    '\\leftrightarrow':'↔','\\forall':'∀','\\exists':'∃','\\therefore':'∴','\\Rightarrow':'⇒',
+    '\\Leftrightarrow':'⟺','\\in':'∈','\\notin':'∉','\\subseteq':'⊆','\\subset':'⊂',
+    '\\cup':'∪','\\cap':'∩','\\setminus':'\\','\\emptyset':'∅','\\mathbb{N}':'ℕ',
+    '\\mathbb{Z}':'ℤ','\\mathbb{Q}':'ℚ','\\mathbb{R}':'ℝ','\\mathbb{C}':'ℂ',
+    '\\nabla':'∇','\\infty':'∞','\\approx':'≈','\\propto':'∝','\\pm':'±','\\neq':'≠',
+    '\\leq':'≤','\\geq':'≥','\\sim':'∼','\\cong':'≅','\\perp':'⊥','\\triangle':'△',
+    '\\alpha':'α','\\beta':'β','\\gamma':'γ','\\delta':'δ','\\epsilon':'ε',
+    '\\theta':'θ','\\lambda':'λ','\\mu':'μ','\\pi':'π','\\sigma':'σ',
+    '\\tau':'τ','\\phi':'φ','\\psi':'ψ','\\omega':'ω','\\Sigma':'Σ','\\Omega':'Ω',
+    '\\partial':'∂','\\times':'×','\\otimes':'⊗','\\odot':'⊙','\\sqrt':'√',
+  };
+  function toUnicode(latex){
+    for(const[k,v]of Object.entries(UNI)){if(latex.includes(k))return v;}
+    const m=latex.match(/[^\\\{\}\^\_\s][^\\\{\}\^\_\s]*/);
+    return m?m[0]:latex;
+  }
+
+  /* ══════════════════════════════════════════
+     COPY / TOAST
+  ══════════════════════════════════════════ */
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    t.textContent=msg; t.classList.add('show');
+    clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1800);
+  }
+  function copyFromData(btn,label){
+    const text=btn.dataset.copy||'';
+    navigator.clipboard.writeText(text).then(()=>{
+      const was=btn.textContent; btn.textContent=label||'✓'; btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent=was;btn.classList.remove('copied');},1500);
+      showToast('Copied to clipboard');
+    }).catch(()=>showToast('Copy failed'));
+  }
+
+  /* ══════════════════════════════════════════
+     EXPORT
+  ══════════════════════════════════════════ */
+  function getFiltered(){
+    const q=searchQuery.toLowerCase();
+    return SYMBOLS.filter(s=>{
+      const catOk=activeFilter==='all'||s.category===activeFilter;
+      const qOk=!q||[s.symbol,s.name,s.meaning,s.explanation||''].some(t=>t.toLowerCase().includes(q));
+      return catOk&&qOk;
+    });
+  }
+  function dl(name,content,type){
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([content],{type}));
+    a.download=name; a.click(); URL.revokeObjectURL(a.href);
+  }
+  function exportCSV(){
+    const rows=getFiltered();
+    const h=['Name','Category','Symbol (LaTeX)','Meaning','Used In','LaTeX Package','Sources'];
+    const lines=[h.join(','),...rows.map(s=>[
+      `"${esc(s.name)}"`,`"${catLabel(s.category)}"`,`"${s.symbol}"`,
+      `"${s.meaning.replace(/"/g,'""')}"`,`"${(s.usedIn||[]).join('; ')}"`,
+      `"${s.pkg||'built-in'}"`,`"${(s.sources||[]).map(k=>SOURCES[k]?.short||k).join('; ')}"`,
+    ].join(','))];
+    dl('mathglyph.csv',lines.join('\n'),'text/csv');
+    showToast(`Exported ${rows.length} symbols as CSV`);
+  }
+  function exportJSON(){
+    const rows=getFiltered().map(s=>({
+      name:s.name,category:catLabel(s.category),symbol_latex:s.symbol,
+      meaning:s.meaning,explanation:s.explanation||'',
+      latex_package:s.pkg||'built-in',used_in:s.usedIn||[],
+      sources:(s.sources||[]).map(k=>SOURCES[k]?.title||k),
+      examples:s.examples||[],
+    }));
+    dl('mathglyph.json',JSON.stringify(rows,null,2),'application/json');
+    showToast(`Exported ${rows.length} symbols as JSON`);
+  }
+
+  /* ══════════════════════════════════════════
+     URL STATE
+  ══════════════════════════════════════════ */
+  function pushState(){
+    const p=new URLSearchParams();
+    if(activeFilter!=='all') p.set('cat',activeFilter);
+    if(searchQuery) p.set('q',searchQuery);
+    if(activeTab!=='symbols') p.set('tab',activeTab);
+    const url=p.toString()?`${location.pathname}?${p}`:location.pathname;
+    history.replaceState(null,'',url);
+  }
+  function loadState(){
+    const p=new URLSearchParams(location.search);
+    const cat=p.get('cat')||localStorage.getItem('mg-cat')||'all';
+    const q=p.get('q')||'';
+    const tab=p.get('tab')||localStorage.getItem('mg-tab')||'symbols';
+    const fs=localStorage.getItem('mg-fs')||'16';
+    activeFilter=cat; searchQuery=q; activeTab=tab;
+    document.getElementById('search').value=q;
+    document.getElementById('fs-select').value=fs;
+    document.documentElement.style.fontSize=fs+'px';
+    document.querySelectorAll('.filter-btn').forEach(b=>{
+      b.classList.toggle('active',b.dataset.cat===cat);
+    });
+  }
+
+  /* ══════════════════════════════════════════
+     STATE
+  ══════════════════════════════════════════ */
+  let activeFilter='all',searchQuery='',allExpanded=false,activeTab='symbols';
+
+  /* ══════════════════════════════════════════
+     RENDER: SYMBOLS
+  ══════════════════════════════════════════ */
+  function updateFilterCounts(){
+    document.querySelectorAll('.filter-btn').forEach(b=>{
+      const cat=b.dataset.cat;
+      const count=cat==='all'?SYMBOLS.length:SYMBOLS.filter(s=>s.category===cat).length;
+      let sp=b.querySelector('.count');
+      if(!sp){sp=document.createElement('span');sp.className='count';b.appendChild(sp);}
+      sp.textContent=count;
+    });
+  }
+
+  function render(){
+    const grid=document.getElementById('grid');
+    const filtered=getFiltered();
+    document.getElementById('count-text').innerHTML=`Showing <b>${filtered.length}</b> of ${SYMBOLS.length} symbols`;
+    document.getElementById('stat-symbols').textContent=SYMBOLS.length+'+';
+
+    if(!filtered.length){
+      grid.innerHTML=`<div class="no-results"><span class="eg">∅</span><p>No symbols matched your search.</p></div>`;
+      return;
+    }
+
+    grid.innerHTML=filtered.map((s,i)=>{
+      const sc=sizeClass(s.symbol);
+      const uc=toUnicode(s.symbol);
+      const exs=(s.examples||[]).map(e=>`<div class="detail-example">${rk(e)}</div>`).join('');
+      const usedInHtml=(s.usedIn||[]).map(u=>`<span class="card-tag tag-usedin">${esc(u)}</span>`).join('');
+      const srcHtml=(s.sources||[]).map(k=>{
+        const src=SOURCES[k];if(!src)return'';
+        return`<span class="source-chip"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>${src.short}</span>`;
+      }).join('');
+      const pkgHtml=s.pkg?`<span class="pkg-badge"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>\\usepackage{${s.pkg}}</span>`:'';
+
+      return`<div class="card" id="c${i}" onclick="toggle(${i})">
+      <div class="card-top">
+        <div class="symbol-box ${sc}">${rk(s.symbol)}</div>
+        <div class="card-info">
+          <div class="card-name">${esc(s.name)}</div>
+          <div class="card-meaning">${esc(s.meaning)}</div>
+          <div class="card-footer">
+            <div class="card-tags"><span class="card-tag ${tagClass(s.category)}">${catLabel(s.category)}</span></div>
+            <svg class="expand-chevron" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card-detail">
+        <div class="detail-section">
+          <div class="detail-label">LaTeX</div>
+          <div class="latex-row">
+            <span class="latex-code">${esc(s.symbol)}</span>
+            <button class="copy-btn" data-copy="${esc(s.symbol)}" onclick="event.stopPropagation();copyFromData(this,'✓ Copied')">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy LaTeX
+            </button>
+            <button class="copy-btn" data-copy="${esc(uc)}" onclick="event.stopPropagation();copyFromData(this,'✓ Copied')">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>Copy Unicode
+            </button>
+          </div>
+          ${pkgHtml?`<div style="margin-top:0.4rem">${pkgHtml}</div>`:''}
+        </div>
+        ${s.explanation?`<div class="detail-section"><div class="detail-label">Explanation</div><div class="detail-text">${esc(s.explanation)}</div></div>`:''}
+        ${exs?`<div class="detail-section"><div class="detail-label">Examples</div>${exs}</div>`:''}
+        ${usedInHtml?`<div class="detail-section"><div class="detail-label">Used in</div><div class="card-tags" style="margin-top:0.1rem">${usedInHtml}</div></div>`:''}
+        ${srcHtml?`<div class="detail-section"><div class="detail-label">Sources</div><div style="margin-top:0.1rem">${srcHtml}</div></div>`:''}
+      </div>
+    </div>`;
+    }).join('');
+
+    if(allExpanded) document.querySelectorAll('.card').forEach(c=>c.classList.add('expanded'));
+    pushState();
+  }
+
+  function toggle(i){
+    document.getElementById('c'+i).classList.toggle('expanded');
+  }
+
+  /* ══════════════════════════════════════════
+     RENDER: GREEK
+  ══════════════════════════════════════════ */
+  function renderGreek(){
+    const tbody=document.querySelector('#greek-table tbody');
+    tbody.innerHTML=GREEK.map(g=>`<tr>
+    <td class="sym-cell">${g.uc}${g.lc?' / '+g.lc:''}</td>
+    <td class="name-cell">${g.name}</td>
+    <td class="latex-cell">${esc(g.latex)}</td>
+    <td class="use-cell">${esc(g.uses)}</td>
+    <td class="copy-cell">
+      <button class="tbl-copy" data-copy="${esc(g.latex)}" onclick="copyFromData(this,'✓')">LaTeX</button>
+      <button class="tbl-copy" data-copy="${g.uc}" onclick="copyFromData(this,'✓')">Char</button>
+    </td>
+  </tr>`).join('');
+  }
+
+  /* ══════════════════════════════════════════
+     RENDER: VARIANTS
+  ══════════════════════════════════════════ */
+  function renderVariants(){
+    const el=document.getElementById('variants-content');
+    el.innerHTML=VARIANTS.map(v=>`
+    <p class="variants-group-title">${esc(v.group)}</p>
+    <table class="variants-table">
+      <thead><tr><th style="width:80px">Symbol</th><th style="width:180px">Field</th><th>Meaning</th></tr></thead>
+      <tbody>${v.rows.map(r=>`<tr>
+        <td class="v-sym">${rk(r.symbol)}</td>
+        <td class="v-field">${esc(r.field)}</td>
+        <td class="v-meaning">${esc(r.meaning)}</td>
+      </tr>`).join('')}</tbody>
+    </table>
+  `).join('');
+  }
+
+  /* ══════════════════════════════════════════
+     RENDER: ABBREVIATIONS
+  ══════════════════════════════════════════ */
+  function renderAbbr(){
+    const grid=document.getElementById('abbr-grid');
+    const seen=new Set();
+    const unique=ABBRS.filter(a=>{if(seen.has(a.term))return false;seen.add(a.term);return true;});
+    unique.sort((a,b)=>a.term.localeCompare(b.term));
+    grid.innerHTML=unique.map(a=>`<div class="abbr-card">
+    <span class="abbr-term">${esc(a.term)}</span>
+    <span class="abbr-def">${esc(a.def)}</span>
+  </div>`).join('');
+  }
+
+  /* ══════════════════════════════════════════
+     EVENTS
+  ══════════════════════════════════════════ */
+  // tabs
+  function switchTab(tab){
+    activeTab=tab;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+tab).classList.add('active');
+    const isSymbols=tab==='symbols';
+    document.getElementById('count-bar').style.display=isSymbols?'flex':'none';
+    document.getElementById('filter-row').style.display=isSymbols?'flex':'none';
+    localStorage.setItem('mg-tab',tab);
+    pushState();
+  }
+  document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+
+  // filters
+  document.querySelectorAll('.filter-btn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    activeFilter=b.dataset.cat;
+    allExpanded=false;
+    document.getElementById('toggle-all-btn').textContent='Expand all';
+    localStorage.setItem('mg-cat',activeFilter);
+    render();
+  }));
+
+  // search
+  document.getElementById('search').addEventListener('input',e=>{
+    searchQuery=e.target.value;
+    render();
+  });
+
+  // keyboard shortcuts
+  document.addEventListener('keydown',e=>{
+    const inp=document.getElementById('search');
+    if(e.key==='/'&&document.activeElement!==inp){e.preventDefault();inp.focus();}
+    if(e.key==='Escape'){inp.blur();}
+  });
+
+  // toggle all
+  document.getElementById('toggle-all-btn').addEventListener('click',()=>{
+    allExpanded=!allExpanded;
+    document.getElementById('toggle-all-btn').textContent=allExpanded?'Collapse all':'Expand all';
+    document.querySelectorAll('.card').forEach(c=>c.classList.toggle('expanded',allExpanded));
+  });
+
+  // export
+  function exportMarkdown(){
+    const rows=getFiltered();
+    const mdEsc=s=>(s||'').replace(/\|/g,'\\|').replace(/\n/g,' ');
+
+    // Group by category
+    const groups={};
+    rows.forEach(s=>{
+      const label=catLabel(s.category);
+      if(!groups[label])groups[label]=[];
+      groups[label].push(s);
+    });
+
+    const lines=[];
+    lines.push('# MathGlyph — Mathematical Notation Reference');
+    lines.push('');
+    lines.push(`> Exported ${rows.length} symbols on ${new Date().toLocaleDateString()}.`);
+    lines.push('');
+
+    for(const[group,syms]of Object.entries(groups)){
+      lines.push(`## ${group}`);
+      lines.push('');
+      lines.push('| Symbol (LaTeX) | Name | Meaning | Used In | LaTeX Package |');
+      lines.push('|---|---|---|---|---|');
+      syms.forEach(s=>{
+        const pkg=s.pkg?`\`\\\\usepackage{${s.pkg}}\``:'built-in';
+        const usedIn=(s.usedIn||[]).join(', ');
+        lines.push(`| \`${mdEsc(s.symbol)}\` | ${mdEsc(s.name)} | ${mdEsc(s.meaning)} | ${mdEsc(usedIn)} | ${pkg} |`);
+      });
+      lines.push('');
+    }
+
+    dl('mathglyph.md',lines.join('\n'),'text/markdown');
+    showToast(`Exported ${rows.length} symbols as Markdown`);
+  }
+  document.getElementById('btn-csv').addEventListener('click',exportCSV);
+  document.getElementById('btn-json').addEventListener('click',exportJSON);
+  document.getElementById('btn-md').addEventListener('click',exportMarkdown);
+
+  // font size dropdown
+  document.getElementById('fs-select').addEventListener('change',()=>{
+    const px=document.getElementById('fs-select').value;
+    document.documentElement.style.fontSize=px+'px';
+    localStorage.setItem('mg-fs',px);
+  });
+
+  // back to top
+  window.addEventListener('scroll',()=>{
+    document.getElementById('back-top').classList.toggle('visible',window.scrollY>400);
+  });
+
+  /* ══════════════════════════════════════════
+     BOOT
+  ══════════════════════════════════════════ */
+  /* ══════════════════════════════════════════
+     EQUATIONS DATA
+  ══════════════════════════════════════════ */
+  const EQUATIONS=[
+    {n:1, name:"Pythagoras's Theorem", author:"Pythagoras", year:"530 BC",
+      formula:"a^2 + b^2 = c^2",
+      description:"In a right-angled triangle, the square of the hypotenuse equals the sum of the squares of the other two sides. It relates the three side lengths of any right triangle.",
+      example:"A 3–4–5 triangle: 3²+4²=9+16=25=5². Used by builders to check corners are perfectly square — measure 3m along one wall, 4m along another; if the diagonal is exactly 5m, the corner is a right angle."},
+    {n:2, name:"Logarithms", author:"John Napier", year:"1610",
+      formula:"\\log xy = \\log x + \\log y",
+      description:"Logarithms convert multiplication into addition. The logarithm of a product equals the sum of the logarithms of its factors. This property made complex astronomical calculations tractable before computers.",
+      example:"Richter scale magnitudes and decibels use logarithms. An earthquake of magnitude 6 releases 10× the energy of magnitude 5, and 100× that of magnitude 4. The logarithmic scale compresses enormous ranges into manageable numbers."},
+    {n:3, name:"Calculus (Derivative)", author:"Isaac Newton", year:"1668",
+      formula:"\\frac{df}{dt} = \\lim_{h \\to 0} \\frac{f(t+h)-f(t)}{h}",
+      description:"The derivative defines the instantaneous rate of change of a function. It is the limit of the average rate of change over an interval as that interval shrinks to zero — the foundation of differential calculus.",
+      example:"A car's speedometer reads the derivative of position with respect to time. If your position (in km) at time t (hours) is f(t)=t², then your speed at t=2h is f'(2)=4 km/h — the instantaneous velocity."},
+    {n:4, name:"Law of Gravity", author:"Isaac Newton", year:"1687",
+      formula:"F = G\\frac{m_1 m_2}{r^2}",
+      description:"Two masses attract each other with a force proportional to the product of their masses and inversely proportional to the square of the distance between them. G is the gravitational constant.",
+      example:"Calculating satellite orbits: the ISS orbits at ~400 km altitude. NASA uses this equation to balance gravitational pull against orbital velocity (~7.7 km/s) to keep the station in a stable orbit without drifting away or falling back to Earth."},
+    {n:5, name:"The Square Root of Minus One", author:"Leonhard Euler", year:"1750",
+      formula:"i^2 = -1",
+      description:"Defines the imaginary unit i, the square root of −1. This extends the real number system to the complex numbers ℂ=a+bi, unlocking solutions to equations previously deemed impossible.",
+      example:"AC electrical engineering uses complex numbers daily. The impedance of a capacitor is written as 1/(iωC). Engineers use i (or j in engineering notation) to calculate how current and voltage relate in circuits containing resistors, capacitors, and inductors."},
+    {n:6, name:"Euler's Formula for Polyhedra", author:"Leonhard Euler", year:"1751",
+      formula:"V - E + F = 2",
+      description:"For any convex polyhedron, the number of vertices (V) minus edges (E) plus faces (F) always equals 2. This topological invariant holds regardless of how the polyhedron is deformed.",
+      example:"A cube has V=8 vertices, E=12 edges, F=6 faces: 8−12+6=2 ✓. A football (truncated icosahedron) has V=60, E=90, F=32: 60−90+32=2 ✓. Useful in computer graphics mesh validation."},
+    {n:7, name:"Normal Distribution", author:"C.F. Gauss", year:"1810",
+      formula:"\\Phi(x) = \\frac{1}{\\sqrt{2\\pi}\\,\\sigma}\\,e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}",
+      description:"The Gaussian (bell curve) probability density function. Most measurements in nature cluster around the mean μ, falling off symmetrically with spread σ. The Central Limit Theorem guarantees it arises from sums of random quantities.",
+      example:"Human heights follow a normal distribution with μ≈170 cm, σ≈10 cm. About 68% of people are within one standard deviation (160–180 cm), and 95% within two (150–190 cm). Used in quality control: a factory sets tolerances at ±3σ, expecting only 0.3% defects."},
+    {n:8, name:"Wave Equation", author:"J. d'Alembert", year:"1746",
+      formula:"\\frac{\\partial^2 u}{\\partial t^2} = c^2 \\frac{\\partial^2 u}{\\partial x^2}",
+      description:"Describes how waves (sound, light, water, seismic) propagate through a medium. The second time derivative of displacement equals c² times the second spatial derivative, where c is the wave speed.",
+      example:"Designing concert halls: acousticians use the wave equation to predict how sound bounces off walls and ceilings. By solving it for a room's geometry, they ensure every seat hears music without echoes or dead spots."},
+    {n:9, name:"Fourier Transform", author:"J. Fourier", year:"1822",
+      formula:"f(\\omega) = \\int_{-\\infty}^{\\infty} f(x)\\,e^{-2\\pi i x\\omega}\\,dx",
+      description:"Decomposes any function into a sum of sinusoidal frequencies. It transforms a signal from the time domain to the frequency domain, revealing which frequencies are present and at what amplitude.",
+      example:"JPEG image compression: photos are decomposed into frequency components using the Fourier transform. High-frequency detail (sharp edges) is discarded first since the eye is less sensitive to it, achieving 10:1 compression with minimal visible quality loss."},
+    {n:10, name:"Navier-Stokes Equation", author:"C. Navier, G. Stokes", year:"1845",
+      formula:"\\rho\\left(\\frac{\\partial\\mathbf{v}}{\\partial t}+\\mathbf{v}\\cdot\\nabla\\mathbf{v}\\right)=-\\nabla p+\\nabla\\cdot\\mathbf{T}+\\mathbf{f}",
+      description:"Describes the motion of viscous fluid. It balances inertia, pressure gradients, viscous forces, and external body forces. Governing equations for everything from blood flow to weather systems.",
+      example:"Weather forecasting: meteorological services numerically solve discretised Navier-Stokes equations across millions of grid points to simulate atmospheric circulation. Modern 5-day forecasts are accurate largely because of improved numerical solutions to these equations."},
+    {n:11, name:"Maxwell's Equations", author:"J.C. Maxwell", year:"1865",
+      formula:"\\nabla \\cdot \\mathbf{E} = \\frac{\\rho}{\\varepsilon_0}, \\quad \\nabla \\times \\mathbf{B} = \\mu_0\\mathbf{J} + \\mu_0\\varepsilon_0\\frac{\\partial\\mathbf{E}}{\\partial t}",
+      description:"Four equations unifying electricity, magnetism, and light. They describe how electric and magnetic fields are generated by charges and currents, and how they propagate as electromagnetic waves.",
+      example:"Wi-Fi and mobile phones: every radio signal, microwave, and light beam obeys Maxwell's equations. Engineers use them to design antennas, calculate transmission ranges, and ensure signals reach your phone at the right frequency without interference."},
+    {n:12, name:"Second Law of Thermodynamics", author:"L. Boltzmann", year:"1874",
+      formula:"dS \\geq 0",
+      description:"The total entropy of an isolated system never decreases over time. Entropy S measures disorder or the number of possible microstates. This law determines the direction of time and why heat flows from hot to cold.",
+      example:"Refrigeration: a fridge moves heat from cold (inside) to hot (outside), which would decrease entropy locally. It must do work (consume electricity) to compensate, ensuring total entropy of the universe still increases — consistent with the law."},
+    {n:13, name:"Relativity", author:"Albert Einstein", year:"1905",
+      formula:"E = mc^2",
+      description:"Energy and mass are equivalent and interconvertible. A small mass m can be converted to an enormous amount of energy E, since c (speed of light, ~3×10⁸ m/s) is squared.",
+      example:"PET scans in hospitals: positrons emitted by a tracer annihilate with electrons, converting mass to two gamma-ray photons via E=mc². The scanner detects these photons to image metabolic activity in the body. Also the principle behind nuclear power plants."},
+    {n:14, name:"Schrödinger's Equation", author:"E. Schrödinger", year:"1927",
+      formula:"i\\hbar\\frac{\\partial}{\\partial t}\\Psi = \\hat{H}\\Psi",
+      description:"The fundamental equation of quantum mechanics. The wave function Ψ encodes all information about a quantum system. Its evolution in time is governed by the Hamiltonian operator Ĥ.",
+      example:"Semiconductor design: the transistors in every computer chip are engineered using quantum mechanical principles derived from Schrödinger's equation. The tunnelling behaviour of electrons through thin oxide layers — essential in flash memory — is a direct quantum effect."},
+    {n:15, name:"Information Theory", author:"C. Shannon", year:"1949",
+      formula:"H = -\\sum p(x)\\log p(x)",
+      description:"Shannon entropy H measures the average information content (or uncertainty) of a random variable. The more unpredictable a source, the higher its entropy. It sets the theoretical limit on how much data can be compressed.",
+      example:"Data compression and internet: ZIP files, MP3s, and streaming video all rely on Shannon's entropy limits. A perfectly random file (like an encrypted archive) cannot be compressed at all — its entropy is maximum. Text files compress well because letters are not random."},
+    {n:16, name:"Chaos Theory", author:"Robert May", year:"1975",
+      formula:"x_{t+1} = kx_t(1 - x_t)",
+      description:"The logistic map demonstrates how a simple deterministic equation can produce chaotic, unpredictable behaviour. For certain values of k (roughly 3.57–4), tiny changes in the initial condition x₀ lead to completely different long-term trajectories.",
+      example:"Population dynamics: replace x with the fraction of a habitat's maximum animal population. With k=2.5 the population stabilises; with k=3.5 it oscillates between two values; with k=3.9 it becomes chaotic and unpredictable — which is why ecologists struggle to forecast animal populations years ahead."},
+    {n:17, name:"Black-Scholes Equation", author:"F. Black, M. Scholes", year:"1990",
+      formula:"\\frac{1}{2}\\sigma^2 S^2\\frac{\\partial^2 V}{\\partial S^2} + rS\\frac{\\partial V}{\\partial S} + \\frac{\\partial V}{\\partial t} - rV = 0",
+      description:"A partial differential equation for pricing financial options. It models how the fair value V of an option changes with the underlying asset price S, time t, volatility σ, and risk-free rate r.",
+      example:"Stock options trading: before Black-Scholes (1973), option prices were set by intuition. Now every options trading platform uses this formula (or derivatives of it) to quote prices in real time. The formula earned Scholes and Merton the 1997 Nobel Prize in Economics."},
+  ];
+
+  /* ══════════════════════════════════════════
+     RENDER: EQUATIONS
+  ══════════════════════════════════════════ */
+  function renderEquations(){
+    const grid=document.getElementById('eq-grid');
+    grid.className='eq-grid';
+    grid.innerHTML=EQUATIONS.map(eq=>`
+    <div class="eq-card">
+      <div class="eq-header">
+        <span class="eq-number">${eq.n}</span>
+        <div class="eq-title-block">
+          <div class="eq-name">${esc(eq.name)}</div>
+          <div class="eq-meta">${esc(eq.author)}, ${esc(eq.year)}</div>
+        </div>
+      </div>
+      <div class="eq-formula">${rk(eq.formula)}</div>
+      <div class="eq-sections">
+        <div>
+          <div class="eq-section-label">What it means</div>
+          <div class="eq-section-text">${esc(eq.description)}</div>
+        </div>
+        <div>
+          <div class="eq-section-label">Real-world example</div>
+          <div class="eq-example">${esc(eq.example)}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  }
+
+  function renderHeaderDesc(){
+    var el=document.getElementById('header-desc');
+    var exprs=['p \\Rightarrow q','\\int_a^b f(x)\\,dx','P(A\\mid B)','\\mathbf{Ax}=\\mathbf{b}'];
+    el.innerHTML='A reference guide to mathematical symbols and notation \u2014 covering logic <span class="hmath"></span>, calculus <span class="hmath"></span>, probability <span class="hmath"></span>, and linear algebra <span class="hmath"></span> \u2014 with LaTeX source, Greek letters, and worked examples.';
+    document.querySelectorAll('.hmath').forEach(function(s,i){katex.render(exprs[i],s,{throwOnError:false,displayMode:false});});
+  }
+
+  function boot(){
+    loadState();
+    renderHeaderDesc();
+    updateFilterCounts();
+    render();
+    renderGreek();
+    renderVariants();
+    renderAbbr();
+    renderEquations();
+    // show/hide count-bar based on restored tab
+    const isSymbols=activeTab==='symbols';
+    document.getElementById('count-bar').style.display=isSymbols?'flex':'none';
+    document.getElementById('filter-row').style.display=isSymbols?'flex':'none';
+    // activate correct tab visually
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===activeTab));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+activeTab).classList.add('active');
+  }
+  function waitKatex(cb){if(window.katex)return cb();setTimeout(()=>waitKatex(cb),80);}
+  waitKatex(boot);
+</script>
+
+<footer>
+    MathGlyph &mdash; <em>Discrete Mathematics</em> (Grami, 2022) &middot; <em>Probabilistic Machine Learning</em> (Murphy, 2023) &middot; <em>Foundations of Agnostic Statistics</em> (Aronow &amp; Miller, 2019) &middot; <em>ML Notation</em> (Holzinger, 2017) &middot; <em>Introductory Statistics</em> (OpenStax) &middot; <em>Notation in Econometrics</em> (Abadir &amp; Magnus, 2002) &middot; <em>Glossary of Mathematical Symbols</em> (Wikipedia)
+</footer>
+</body>
+</html>
